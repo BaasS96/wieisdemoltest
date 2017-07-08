@@ -1,5 +1,5 @@
 <?PHP
-$filename = "testdata.db";
+$filename = "data/testdata.db";
 $newdb = new SQLite3($filename);
 	$newdb->exec("CREATE TABLE users (userid INTEGER PRIMARY KEY, name TEXT, score INTEGER, jokers INTEGER)");
 	echo 'data inserted';

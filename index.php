@@ -4,16 +4,16 @@
         <title>
             Wie Is De Mol
         </title>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="style/style.css">
     </head>
     <body id="body">
         <div class="widm-logo-blur-holder">
-            <img src="WIDM_LOGO_BLACK_BLURRED.jpg" class="widm-logo-blur" alt="" />
+            <img src="images/WIDM_LOGO_BLACK_BLURRED.jpg" class="widm-logo-blur" alt="" />
         </div>
         <div class="TB contentholder">
             <div class="TR">
                 <div class="TD">
-                    <img src="WIDM_LOGO_BLACK.jpg" id="WIDM_LOGO" />
+                    <img src="images/WIDM_LOGO_BLACK.jpg" id="WIDM_LOGO" />
                 </div>
                 <div class="TD">
                     <span class="H1">9. &nbsp; Wat is het geluksgetal van de Mol?</span>

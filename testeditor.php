@@ -4,8 +4,8 @@
         <title>
             WIDM Test editor
         </title>
-        <link rel='stylesheet' href='testeditor.css'>
-        <script src="testeditor.js"></script>
+        <link rel='stylesheet' href='style/testeditor.css'>
+        <script src="script/testeditor.js"></script>
     </head>
     <body id="body">
         <form action="updatetest.php" method="post">
