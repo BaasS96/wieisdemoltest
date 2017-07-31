@@ -23,26 +23,30 @@ function saveData() {
     }
     var testdatabase = JSON.stringify(questions);
     console.log(testdatabase);
+    sendData(testdatabase);
 }
 function sendData(data) {
     var name = document.getElementById("test_name").value;
+    name = name.replace(/\s+/g, '-').toLowerCase();
     var save = new Date();
     var timestring = "";
-    timestring += save.getDate() + "-";
-    timestring += save.getMonth() + "-";
-    timestring += save.getFullYear() + "/";
-    timestring += save.getHours() + ":" + save.getMinutes() + ":" + save.getSeconds();
+    timestring += save.getDate() + "_";
+    timestring += save.getMonth() + "_";
+    timestring += save.getFullYear() + "_";
+    timestring += save.getHours() + "_" + save.getMinutes() + "_" + save.getSeconds();
     fetch("savefile.php?name=" + name + "&save=" +  timestring + "&data=" + data)
     .then(function(res){
         if (res.ok) {
             return res.text();
+        } else {
+            alert("HTTP error");
         }
     })
     .then(function(succes) {
-        if (succes === "true") {
-
+        if (succes == "true") {
+            //lastsaveed = timestring;
         } else {
-            
+            alert("error");
         }
     });
 }
