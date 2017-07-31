@@ -215,3 +215,7 @@ input[type=checkbox]:checked + label {
 input[type=checkbox]:checked + label:hover {
     background-image: url(../images/check_box_white_96x96.png);
 }
+
+#lastsaved {
+    font-style: italic;
+}

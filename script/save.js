@@ -24,3 +24,25 @@ function saveData() {
     var testdatabase = JSON.stringify(questions);
     console.log(testdatabase);
 }
+function sendData(data) {
+    var name = document.getElementById("test_name").value;
+    var save = new Date();
+    var timestring = "";
+    timestring += save.getDate() + "-";
+    timestring += save.getMonth() + "-";
+    timestring += save.getFullYear() + "/";
+    timestring += save.getHours() + ":" + save.getMinutes() + ":" + save.getSeconds();
+    fetch("savefile.php?name=" + name + "&save=" +  timestring + "&data=" + data)
+    .then(function(res){
+        if (res.ok) {
+            return res.text();
+        }
+    })
+    .then(function(succes) {
+        if (succes === "true") {
+
+        } else {
+            
+        }
+    });
+}

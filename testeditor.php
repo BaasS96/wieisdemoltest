@@ -18,6 +18,10 @@
                     <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
                     <button type="button" class="hideall_icon" title="Hide all questions" onclick="hideall();">&nbsp;</button>
                 </div>
+                <div class="holder">
+                    <input type="text" id="test_name" placeholder="Test name">
+                    <span class="lastsaved">Last saved: </span><span id="lastsaved">never</span>
+                </div>
                 <div id="questionholder">
                 </div>
                 <div id="editorfooter">
