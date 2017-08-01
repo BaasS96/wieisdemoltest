@@ -27,7 +27,7 @@ function saveData() {
 }
 function sendData(data) {
     var name = document.getElementById("test_name").value;
-    name = name.replace(/\s+/g, '-').toLowerCase();
+    name = name.replace(/\s+/g, '_').toLowerCase();
     var save = new Date();
     var timestring = "";
     timestring += save.getDate() + "_";
@@ -45,6 +45,7 @@ function sendData(data) {
     .then(function(succes) {
         if (succes == "true") {
             //lastsaveed = timestring;
+            document.getElementById("lastsaved").innerHTML = timestring;
         } else {
             alert("error");
         }

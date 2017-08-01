@@ -6,7 +6,7 @@
         if (!is_dir("data\\$name")) {
             mkdir("data\\$name");
         }
-        $file = "data\\$name\\$name" . "_" . "$save.json";
+        $file = "data\\$name\\$name" . "-" . "$save.json";
         if ($fp = fopen($file, "w")) {
             if (fwrite($fp, $data)) {
                 if (fclose($fp)) {
