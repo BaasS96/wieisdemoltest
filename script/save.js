@@ -39,15 +39,10 @@ function sendData(data) {
         if (res.ok) {
             return res.text();
         } else {
-            document.getElementById("")
+            document.getElementById("lastsaved").innerHTML = "An error occured while saving: " + res.status + " - " + res.statusText;
         }
     })
     .then(function(succes) {
-        if (succes == "true") {
-            //lastsaveed = timestring;
-            document.getElementById("lastsaved").innerHTML = timestring;
-        } else {
-            alert("error");
-        }
+        document.getElementById("lastsaved").innerHTML = timestring;
     });
 }
