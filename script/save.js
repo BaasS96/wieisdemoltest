@@ -39,7 +39,7 @@ function sendData(data) {
         if (res.ok) {
             return res.text();
         } else {
-            alert("HTTP error");
+            document.getElementById("")
         }
     })
     .then(function(succes) {

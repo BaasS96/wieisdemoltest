@@ -10,15 +10,17 @@
         if ($fp = fopen($file, "w")) {
             if (fwrite($fp, $data)) {
                 if (fclose($fp)) {
-                    echo "true";
+                    header('HTTP/1.1 201 Created');
                 } else {
-                    echo "error";
+                    header('HTTP/1.1 422 There was an error while trying to write the file. This likely means that the directory could not be found or that the filename is invalid.');
                 }
             } else {
-                echo "error"; 
+                header('HTTP/1.1 422 There was an error while trying to write the file. This likely means that the directory could not be found or that the filename is invalid.');                    
             }
         } else {
-            echo "error";
+            header('HTTP/1.1 422 There was an error while trying to write the file. This likely means that the directory could not be found or that the filename is invalid.');
         }
+    } else {
+        header('HTTP/1.1 412 Request options were not provided.');
     }
 ?>
