@@ -21,10 +21,10 @@
                 <div class="holder">
                     <input type="text" id="test_name" placeholder="Test name">
                 </div>
-                <div id="questionholder">
-                </div>
                 <div id="editorfooter">
                     <span class="lastsaved">Last saved: </span><span id="lastsaved">never</span>
+                </div>
+                <div id="questionholder">
                 </div>
             </section>
         </form>

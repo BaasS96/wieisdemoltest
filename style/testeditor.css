@@ -24,7 +24,7 @@ html {
 #editorholder {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100% - 15em);
 }
 #mainmenuholder {
     flex: 0;
@@ -47,6 +47,9 @@ html {
     font-size: 0.7em;
     line-height: 2em;
     transition: color 0.3s ease;
+    position: fixed;
+    display: block;
+    bottom: 0;
 }
 #editorfooter:hover {
     color: #FFFFFF;
