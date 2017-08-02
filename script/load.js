@@ -2,7 +2,7 @@ function loadData(file) {
 
 }
 
-function getData(file) {
+function getData(file, preload) {
     fetch("getfile.php?file=" + file)
     .then(function(res) {
         var ctype = res.headers.get("content-type");

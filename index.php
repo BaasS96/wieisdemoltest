@@ -10,6 +10,13 @@
         <div class="widm-logo-blur-holder">
             <img src="images/WIDM_LOGO_BLACK_BLURRED.jpg" class="widm-logo-blur" alt="" />
         </div>
+        <div class="TB_logon">
+            <input id="name" type="text" placeholder="Naam">
+            <br>
+            <input id="pin" type="text" placeholder="Pin">
+            <br>
+            <button>Verder</button>
+        </div>
         <div class="TB contentholder">
             <div class="TR">
                 <div class="TD">
