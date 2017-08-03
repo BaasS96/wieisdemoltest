@@ -1,4 +1,4 @@
-var testname;
+var testname, currenttest;
 window.onload = function() {
     fetch("data/defaulttest.json")
     .then(function(res) {
@@ -26,6 +26,8 @@ function startTest() {
             var init = initializeTest(name, pin);
             if (init === true) {
                 //Continue with the actual test;
+                document.getElementById('logon').style.display = "none";
+                document.activeElement('content').style.display = "table-cell";
             } else {
                 alert(init);
             }

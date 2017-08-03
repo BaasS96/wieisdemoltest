@@ -5,19 +5,21 @@
             Wie Is De Mol
         </title>
         <link rel="stylesheet" type="text/css" href="style/style.css">
+        <script src="script/load.js"></script>
+        <script src="script/test.js"></script>
     </head>
     <body id="body">
         <div class="widm-logo-blur-holder">
             <img src="images/WIDM_LOGO_BLACK_BLURRED.jpg" class="widm-logo-blur" alt="" />
         </div>
-        <div class="TB_logon">
+        <div id="logon" class="TB_logon">
             <input id="name" type="text" placeholder="Naam">
             <br>
             <input id="pin" type="text" placeholder="Pin">
             <br>
-            <button>Verder</button>
+            <button onclick="startTest();">Verder</button>
         </div>
-        <div class="TB contentholder">
+        <div id="content" class="TB contentholder">
             <div class="TR">
                 <div class="TD">
                     <img src="images/WIDM_LOGO_BLACK.jpg" id="WIDM_LOGO" />
