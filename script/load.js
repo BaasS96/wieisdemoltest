@@ -1,5 +1,11 @@
 function loadData(file) {
-
+    var nameholder = document.getElementById("test_name");
+    var questions = document.getElementById("questionholder");
+    nameholder.value = file.name;
+    for(var i = 0; i < file.answers.length; i++) {
+        addquestion();
+    }
+    
 }
 
 function getData(file, preload) {
@@ -18,5 +24,6 @@ function getData(file, preload) {
     .then(function(json) {
         //Process json further
         //loadData(json);
+        preload ? currenttest = json : loadData(json);
     });
 }
