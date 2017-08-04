@@ -4,6 +4,7 @@ function writeJsDebug(input) {
     jsDebugOutput = document.getElementById("editorfooter");
     jsDebugOutput.innerHTML += jsDebugText + " | ";
 }
+
 function writeJsNewLine() {
     document.getElementById("editorfooter").innerHTML += " ~ | ";
 }
@@ -14,7 +15,7 @@ qidCount = 0;
 //make a new question ID
 function newqid() {
     newQid = "q" + qidCount;
-    qidCount ++;
+    qidCount++;
     return newQid;
 }
 //make a new answer ID, based on the number of children
@@ -32,7 +33,7 @@ function addquestion() {
     emptyquestion.className = "questionholder";
     qid = emptyquestion.id;
     emptyquestion.title = qid;
-    emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_'+ qid +'" onclick="togglequestion(\''+ qid +'\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_'+ qid +'" class="titleholder"></span></div><div id="'+ qid +'_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\''+ qid +'\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\''+ qid +'\');" id="input_title_'+ qid +'"></div>';
+    emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder"></span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '"></div>';
     document.getElementById("questionholder").appendChild(emptyquestion);
     updateTitle(qid);
     togglequestion(qid);
@@ -48,7 +49,7 @@ function removequestion(sender) {
         obj.parentNode.removeChild(obj);
         var children = document.getElementById(questionHolder.id).childNodes;
         var i;
-        for (i=0; i<(children.length); i++) {
+        for (i = 0; i < (children.length); i++) {
             newi = i--;
             writeJsDebug(i);
             writeJsDebug(newi);
@@ -66,7 +67,7 @@ function addanswer(parentId) {
     emptyanswer.className = "answerholder";
     aid = emptyanswer.id;
     emptyanswer.title = aid;
-    emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_'+ aid +'" /><label class="chb_label" title="Answer is right" for="chb_'+ aid +'"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
+    emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
     document.getElementById(parentId + "_holder").appendChild(emptyanswer);
 }
 //function to remove the answer
@@ -77,7 +78,7 @@ function removeanswer(sender) {
     obj.parentNode.removeChild(obj);
     var children = document.getElementById(objHolder.id).childNodes;
     var i;
-    for (i=2; i<(children.length); i++) {
+    for (i = 2; i < (children.length); i++) {
         var newi = i - 2;
         children[i].id = objQNum.id + "_a" + newi;
         children[i].title = children[i].id;
@@ -90,18 +91,17 @@ function togglequestion(qId) {
         document.getElementById(qId + "_holder").style.display = "none";
         document.getElementById("bttntoggleq_" + qId).className = "bttntoggleq-show";
         document.getElementById("bttntoggleq_" + qId).title = "Show";
-    }
-    else {
+    } else {
         document.getElementById(qId + "_holder").style.display = "block";
         document.getElementById("bttntoggleq_" + qId).className = "bttntoggleq-hide";
         document.getElementById("bttntoggleq_" + qId).title = "Hide";
-    }    
+    }
 }
 //Function to show all questions
 function showall(el) {
     var children = document.getElementById("questionholder").childNodes;
     var i;
-     for (i=1; i<(children.length); i++) {
+    for (i = 1; i < (children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
         if (questionToggleStatus === "none") {
             var qId = children[i].id;
@@ -115,7 +115,7 @@ function showall(el) {
 function hideall(el) {
     var children = document.getElementById("questionholder").childNodes;
     var i;
-     for (i=1; i<(children.length); i++) {
+    for (i = 1; i < (children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
         if (questionToggleStatus !== "none") {
             var qId = children[i].id;
@@ -143,7 +143,7 @@ function expandPanel(el) {
         }
     }
     el.className = "showall_icon";
-    el.onclick = function() {collapsePanel(this);};
+    el.onclick = function() { collapsePanel(this); };
 }
 
 function collapsePanel(el) {
@@ -155,29 +155,32 @@ function collapsePanel(el) {
         }
     }
     el.className = "hideall_icon";
-    el.onclick = function() {expandPanel(this);};
+    el.onclick = function() { expandPanel(this); };
 }
 
-function expandTest(el) {
+function expandTest(el, nm) {
     var actualholder = el.parentNode;
     var kids = actualholder.childNodes;
-    for (var i = 4; i < kids.length; i++) {
+    if (kids.length === 3) {
+        getFileRevisions(nm, actualholder);
+    }
+    for (var i = 3; i < kids.length; i++) {
         if (kids[i].style) {
             kids[i].style.display = "block";
         }
     }
     el.className = "showall_icon";
-    el.onclick = function() {collapseTest(this);};
+    el.onclick = function() { collapseTest(this); };
 }
 
 function collapseTest(el) {
-    var actualholder = el.parentNode;  
+    var actualholder = el.parentNode;
     var kids = actualholder.childNodes;
-    for (var i = 4; i < kids.length; i++) {
+    for (var i = 3; i < kids.length; i++) {
         if (kids[i].style) {
             kids[i].style.display = "none";
         }
     }
     el.className = "hideall_icon";
-    el.onclick = function() {expandTest(this);};
+    el.onclick = function() { expandTest(this); };
 }

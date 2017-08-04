@@ -24,7 +24,7 @@ function listFiles() {
         });
 }
 
-function getFileRevisions(test) {
+function getFileRevisions(test, parent) {
     fetch("listrevisions.php?test=" + test)
         .then(function(res) {
             var ctype = res.headers.get("content-type");
@@ -38,7 +38,15 @@ function getFileRevisions(test) {
             throw new TypeError("Did not receive content-type application/json");
         })
         .then(function(json) {
-
+            var l = json.length;
+            for (var i = 0; i < l; i++) {
+                var parts = json[i].split("_");
+                var date = parts[0] + "." + parts[1] + "." + parts[2] + "-" + parts[3] + ":" + parts[4] + ":" + parts[5];
+                var holder = document.createElement("div");
+                holder.className = "rightpanel_sub_subcontentholder";
+                holder.innerHTML = i + 1 + " - " + date;
+                parent.appendChild(holder);
+            }
         });
 }
 
@@ -89,7 +97,7 @@ function createFileOpenSubPanel(name, revisions, index) {
     var hh = document.createElement("div");
     var h = document.createElement("div");
     h.className = "rightpanel_subcontentholder";
-    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this);'>&nbsp;</button> <span id='testname' class='rightpanel_subcontentholder_content'>" +
+    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' class='rightpanel_subcontentholder_content'>" +
         name + "&emsp;<span class='rightpanel_content_italic'>" + revisions;
     if (revisions < 2) { c += " revision"; } else { c += " revisions"; }
     c += "</span></span>";
