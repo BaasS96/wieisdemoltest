@@ -1,3 +1,21 @@
+function listFiles() {
+    fetch("listtests.php")
+    .then(function(res) {
+        var ctype = res.headers.get("content-type");
+        if (ctype && ctype.includes("application/json")) {
+            if (res.ok) {
+                return res.json();
+            } else {
+                //Handle error code
+            }
+        }
+        throw new TypeError("Did not receive content-type application/json");
+    })
+    .then(function(json) {
+        //Add the files
+    });
+}
+
 function loadData(file) {
     var nameholder = document.getElementById("test_name");
     var questions = document.getElementById("questionholder");
