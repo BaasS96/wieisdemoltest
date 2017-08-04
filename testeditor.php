@@ -33,7 +33,7 @@
                             </div>
                             <div class="rightpanel_content">
                                 <div class="rightpanel_subcontentholder">
-                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall(this);">&nbsp;</button>
                                     <span id="testname" class="rightpanel_subcontentholder_content">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
                                     <div class="rightpanel_sub_subcontentholder">
                                         1 - 09 07 2017 16 35 56
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="rightpanel_subcontentholder">
-                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall(this);">&nbsp;</button>
                                     <span id="testname">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
                                     <div class="rightpanel_sub_subcontentholder">
                                         1 - 09 07 2017 16 35 56
@@ -56,12 +56,12 @@
                         </div>
                         <div class="rightpanel">
                             <div class="rightpanel_header">
-                                <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                <button type="button" class="showall_icon" title="Show all questions" onclick="collapsePanel(this);">&nbsp;</button>
                                 <span class="rightpanel_header_text">Load file</span>
                             </div>
                             <div class="rightpanel_content">
                                 <div class="rightpanel_subcontentholder">
-                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="collapseTest(this);">&nbsp;</button>
                                     <span id="testname" class="rightpanel_subcontentholder_content">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
                                     <div class="rightpanel_sub_subcontentholder">
                                         1 - 09 07 2017 16 35 56
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="rightpanel_subcontentholder">
-                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="expandPanel(this);">&nbsp;</button>
                                     <span id="testname">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
                                     <div class="rightpanel_sub_subcontentholder">
                                         1 - 09 07 2017 16 35 56

@@ -98,8 +98,8 @@ function togglequestion(qId) {
     }    
 }
 //Function to show all questions
-function showall() {
-    children = document.getElementById("questionholder").childNodes;
+function showall(el) {
+    var children = document.getElementById("questionholder").childNodes;
     var i;
      for (i=1; i<(children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
@@ -112,8 +112,8 @@ function showall() {
     }
 }
 //Function to hide all questions
-function hideall() {
-    children = document.getElementById("questionholder").childNodes;
+function hideall(el) {
+    var children = document.getElementById("questionholder").childNodes;
     var i;
      for (i=1; i<(children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
@@ -132,4 +132,52 @@ function updateTitle(qId) {
         newTitle = "<span class='error' title='Please add a title for this question'>No Title</span>";
     }
     document.getElementById("titleholder_" + qId).innerHTML = newTitle;
+}
+
+function expandPanel(el) {
+    var actualholder = el.parentNode.parentNode;
+    var children = actualholder.childNodes;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].className === "rightpanel_content") {
+            children[i].style.display = "block";
+        }
+    }
+    el.className = "showall_icon";
+    el.onclick = function() {collapsePanel(this);};
+}
+
+function collapsePanel(el) {
+    var actualholder = el.parentNode.parentNode;
+    var children = actualholder.childNodes;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].className === "rightpanel_content") {
+            children[i].style.display = "none";
+        }
+    }
+    el.className = "hideall_icon";
+    el.onclick = function() {expandPanel(this);};
+}
+
+function expandTest(el) {
+    var actualholder = el.parentNode;
+    var kids = actualholder.childNodes;
+    for (var i = 4; i < kids.length; i++) {
+        if (kids[i].style) {
+            kids[i].style.display = "block";
+        }
+    }
+    el.className = "showall_icon";
+    el.onclick = function() {collapseTest(this);};
+}
+
+function collapseTest(el) {
+    var actualholder = el.parentNode;  
+    var kids = actualholder.childNodes;
+    for (var i = 4; i < kids.length; i++) {
+        if (kids[i].style) {
+            kids[i].style.display = "none";
+        }
+    }
+    el.className = "hideall_icon";
+    el.onclick = function() {expandTest(this);};
 }
