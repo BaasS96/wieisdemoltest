@@ -22,22 +22,54 @@ html {
     overflow: hidden;
 }
 #editorholder {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 15em);
+    height: calc(100vh - 1.9em);
 }
 #mainmenuholder {
-    flex: 0;
     width: 100%;
     padding: 0.3em;
     background-color: #000000;
 }
 #questionholder {
-    flex: 1 1 auto;
-    margin-bottom: 0px;
-    width: 100%;
-    height: calc(100vh - 3.8em);
+    width: 60%;
+    height: 100%;
     overflow-y: auto;
+    display: block;
+    float: left;
+}
+.uberholder {
+    display: block;
+    width: 100vw;
+    height: calc(100% - 1.9em);
+}
+.holderright {
+    display: inline-block;
+    width: 40%;
+    height: 100%;
+    background-color: #323232;
+}
+.rightpanel {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #545454;
+    display: block;
+    color: #757575;
+    transition: color 0.3s ease;
+}
+.rightpanel:hover {
+    color: #FFFFFF;
+}
+.rightpanel_header {
+    width: 100%;
+    padding: 0.1em 0.1em 0.1em 0.1em;
+    background-color: #434343;
+    font-size: 1em;
+}
+.rightpanel_content {
+    padding-left: 2.2em;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    font-size: 0.8em;
 }
 #editorfooter {
     flex: 0;

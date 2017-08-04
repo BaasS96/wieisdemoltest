@@ -18,13 +18,24 @@
                     <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
                     <button type="button" class="hideall_icon" title="Hide all questions" onclick="hideall();">&nbsp;</button>
                 </div>
-                <div class="holder">
-                    <input type="text" id="test_name" placeholder="Test name">
-                </div>
                 <div id="editorfooter">
                     <span class="lastsaved">Last saved: </span><span id="lastsaved">never</span>
+                    <input type="text" id="test_name" placeholder="Test name">
                 </div>
-                <div id="questionholder">
+                <div class="uberholder">
+                    <div id="questionholder">
+                    </div>
+                    <div class="holderright">
+                        <div class="rightpanel">
+                            <div class="rightpanel_header">
+                                <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                <span class="rightpanel_header_text">Info</span>
+                            </div>
+                            <div class="rightpanel_content">
+                                Geen content
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </form>
