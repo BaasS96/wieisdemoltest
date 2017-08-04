@@ -50,7 +50,7 @@ html {
 .rightpanel {
     width: 100%;
     height: auto;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid #434343;
     display: block;
     color: #757575;
     transition: color 0.3s ease;
@@ -65,11 +65,36 @@ html {
     font-size: 1em;
 }
 .rightpanel_content {
-    padding-left: 2.2em;
+    padding-left: 2em;
+    font-size: 0.8em;
+}
+.rightpanel_content_italic {
+    font-style: italic;
+}
+.rightpanel_subcontentholder {
+    display: block;
     padding-bottom: 0.2em;
     padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+}
+.rightpanel_subcontentholder:hover {
+    background-color: #212121;
+}
+.rightpanel_sub_subcontentholder {
+    display: block;
+    margin-left: 2em;
+    margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    transition: color 0.3s ease;
+}
+.rightpanel_sub_subcontentholder:hover {
+    color: #CCCCFF;
+}
+.rightpanel_subcontentholder_content {
+    transition: color 0.3s ease;
+}
+.rightpanel_subcontentholder_content:hover {
+    color: #AAAAFF;
 }
 #editorfooter {
     flex: 0;
