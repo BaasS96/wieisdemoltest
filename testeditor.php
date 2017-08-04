@@ -18,13 +18,71 @@
                     <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
                     <button type="button" class="hideall_icon" title="Hide all questions" onclick="hideall();">&nbsp;</button>
                 </div>
-                <div class="holder">
-                    <input type="text" id="test_name" placeholder="Test name">
-                </div>
                 <div id="editorfooter">
                     <span class="lastsaved">Last saved: </span><span id="lastsaved">never</span>
+                    <input type="text" id="test_name" placeholder="Test name">
                 </div>
-                <div id="questionholder">
+                <div class="uberholder">
+                    <div id="questionholder">
+                    </div>
+                    <div class="holderright">
+                        <div class="rightpanel">
+                            <div class="rightpanel_header">
+                                <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                <span class="rightpanel_header_text">Load file</span>
+                            </div>
+                            <div class="rightpanel_content">
+                                <div class="rightpanel_subcontentholder">
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <span id="testname" class="rightpanel_subcontentholder_content">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 09 07 2017 16 35 56
+                                    </div>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 20 07 2017 09 56 23
+                                    </div>
+                                </div>
+                                <div class="rightpanel_subcontentholder">
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <span id="testname">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 09 07 2017 16 35 56
+                                    </div>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 20 07 2017 09 56 23
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rightpanel">
+                            <div class="rightpanel_header">
+                                <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                <span class="rightpanel_header_text">Load file</span>
+                            </div>
+                            <div class="rightpanel_content">
+                                <div class="rightpanel_subcontentholder">
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <span id="testname" class="rightpanel_subcontentholder_content">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 09 07 2017 16 35 56
+                                    </div>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 20 07 2017 09 56 23
+                                    </div>
+                                </div>
+                                <div class="rightpanel_subcontentholder">
+                                    <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
+                                    <span id="testname">1 &emsp;<span class="rightpanel_content_italic">2 revisions</span></span>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 09 07 2017 16 35 56
+                                    </div>
+                                    <div class="rightpanel_sub_subcontentholder">
+                                        1 - 20 07 2017 09 56 23
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </form>
