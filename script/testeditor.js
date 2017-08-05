@@ -14,7 +14,7 @@ function writeJsNewLine() {
 }
 
 //Counter for new question IDs, TEMP
-qidCount = 0;
+var qidCount = 0;
 
 //make a new question ID
 function newqid() {
@@ -31,16 +31,23 @@ function newaid(parentId) {
     return parentId;
 }
 //make a new question. First, build the div element and assign an id and a class to it, then add it to the field. Then, update the title and toggle it.
-function addquestion() {
+function addquestion(title) {
     emptyquestion = document.createElement("div");
     emptyquestion.id = newqid();
     emptyquestion.className = "questionholder";
     qid = emptyquestion.id;
     emptyquestion.title = qid;
-    emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder"></span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '"></div>';
+    if (typeof title === "undefined") {
+        emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder"></span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '"></div>';
+    } else {
+        emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder">' + title + '</span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '" value = "' + title + '"></div>';
+    }
     document.getElementById("questionholder").appendChild(emptyquestion);
     updateTitle(qid);
     togglequestion(qid);
+    if (typeof title !== "undefined") {
+        return qid;
+    }
 }
 //function to remove the question
 function removequestion(sender) {
@@ -64,15 +71,21 @@ function removequestion(sender) {
     }
 }
 //make a new answer. First, build the div element. Then write it to the field.
-function addanswer(parentId) {
+function addanswer(parentId, answer, correct) {
     emptyanswer = document.createElement("div");
     aidCount = document.getElementById(parentId).childElementCount;
     emptyanswer.id = newaid(parentId);
     emptyanswer.className = "answerholder";
     aid = emptyanswer.id;
     emptyanswer.title = aid;
-    emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
-    document.getElementById(parentId + "_holder").appendChild(emptyanswer);
+    if (typeof answer === undefined) {
+        emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
+        document.getElementById(parentId + "_holder").appendChild(emptyanswer);
+    } else {
+        emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" value="' + answer + '" id="input_answer_' + aid + '">';
+        document.getElementById(parentId + "_holder").appendChild(emptyanswer);
+        document.getElementById("chb_" + aid).checked = correct;
+    }
 }
 //function to remove the answer
 function removeanswer(sender) {
@@ -187,4 +200,9 @@ function collapseTest(el) {
     }
     el.className = "hideall_icon";
     el.onclick = function() { expandTest(this); };
+}
+
+function cleareditor() {
+    document.getElementById("questionholder").innerHTML = "";
+    qidCount = 0;
 }

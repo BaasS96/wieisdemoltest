@@ -45,22 +45,28 @@ function getFileRevisions(test, parent) {
                 var holder = document.createElement("div");
                 holder.className = "rightpanel_sub_subcontentholder";
                 holder.innerHTML = i + 1 + " - " + date;
+                holder.onclick = function() {
+                    getData(test, date, false);
+                };
                 parent.appendChild(holder);
             }
         });
 }
 
-function loadData(file) {
-    if (sessionStorage.file) {
-        var nameholder = document.getElementById("test_name");
-        var questions = document.getElementById("questionholder");
-        nameholder.value = file.name;
-        for (var i = 0; i < file.answers.length; i++) {
-            addquestion();
+function loadData(file, tname) {
+    cleareditor();
+    var nameholder = document.getElementById("test_name");
+    var lastsaved = document.getElementById("lastsaved");
+    var questions = document.getElementById("questionholder");
+    nameholder.value = tname;
+    lastsaved.innerHTML = file.rev;
+    var data = JSON.parse(file.data);
+    data.forEach(function(currentelement) {
+        var pid = addquestion(currentelement.title);
+        for (var i = 0; i < currentelement.answers.length; i++) {
+            addanswer(pid, currentelement.answers[i].title, currentelement.answers[i].correct);
         }
-    } else {
-        
-    }
+    }, this);
 }
 
 function getData(file, revision, preload) {
@@ -78,8 +84,7 @@ function getData(file, revision, preload) {
         })
         .then(function(json) {
             //Process json further
-            //loadData(json);
-            
+            loadData(json, file);
         });
 }
 
@@ -100,7 +105,7 @@ function createFileOpenSubPanel(name, revisions, index) {
     var hh = document.createElement("div");
     var h = document.createElement("div");
     h.className = "rightpanel_subcontentholder";
-    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='loadData(\"" + name + "\", \"LATEST\")' class='rightpanel_subcontentholder_content'>" +
+    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(\"" + name + "\", \"LATEST\", false)' class='rightpanel_subcontentholder_content'>" +
         name + "&emsp;<span class='rightpanel_content_italic'>" + revisions;
     if (revisions < 2) { c += " revision"; } else { c += " revisions"; }
     c += "</span></span>";
