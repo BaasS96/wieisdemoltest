@@ -1,3 +1,7 @@
+window.onload = function() {
+    listFiles();
+}
+
 //Temp debug JS Output
 function writeJsDebug(input) {
     jsDebugText = String(input);
