@@ -3,7 +3,7 @@
     $files = scandir("data");
     $dirs = array();
     foreach ($files as $value) {
-        if (is_dir("data\\$value") && ($value != "." && $value != "..")) {
+        if (is_dir("data\\$value") && ($value != "." && $value != ".." && $value != "contestantlists")) {
             $conts = scandir("data\\$value");
             $revisions = array_diff($conts, array("..", "."));
             $dirs[$value] = count($revisions);

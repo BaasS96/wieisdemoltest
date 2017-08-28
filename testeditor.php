@@ -15,7 +15,7 @@
                 <div id="mainmenuholder">
                     <button type="button" class="save_icon" title="Save test" onclick="saveData();">&nbsp;</button>
                     &emsp;
-                    <button type="button" class="addq_icon" title="Add question" onclick="addquestion();">&nbsp;</button>
+                    <button type="button" class="addq_icon" title="Add question" onclick="addquestion();" id="add">&nbsp;</button>
                     <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
                     <button type="button" class="hideall_icon" title="Hide all questions" onclick="hideall();">&nbsp;</button>
                 </div>

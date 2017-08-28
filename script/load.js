@@ -12,7 +12,7 @@ function listFiles() {
             throw new TypeError("Did not receive content-type application/json");
         })
         .then(function(json) {
-            var holder = createMainPanel();
+            var holder = createMainPanel("file");
             var keys = Object.keys(json);
             var l = keys.length;
             for (var i = 0; i < l; i++) {
@@ -90,20 +90,30 @@ function getData(event) {
         });
 }
 
-function listContestantLists() {
-    fetch("listcontestantlists.php")
+function listContestants() {
+    fetch("data/contestants.json")
         .then(function(res) {
             var ctype = res.headers.get("content-type");
             if (ctype && ctype.includes("application/json")) {
                 if (res.ok) {
-                    return res.json();
+                    return res.text();
                 } else {
                     //Handle error code
                 }
             }
             throw new TypeError("Did not receive content-type application/json");
         })
-        .then(function(json) {
+        .then(function(rjson) {
+            initContestantEditor();
+            if (rjson === "") {
+                return;
+            }
+            var json;
+            try {
+                json = JSON.parse(rjson);
+            } catch (error) {
+                console.log(error);
+            }
             var holder = createMainPanel("contestants");
             var keys = Object.keys(json);
             var l = keys.length;
@@ -122,11 +132,13 @@ function createMainPanel(type) {
     holder.className = "rightpanel";
     var header = document.createElement("div");
     header.className = "rightpanel_header";
-    var html = "<button type='button' class='showall_icon' title='Show all questions' onclick='collapsePanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>";
+    var html;
     if (type === "file") {
-        html += "Load File";
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='collapsePanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Load file";
+    } else if (type === "publishinfo") {
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Publication info";
     } else {
-        html += "Contestants";
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Contestants";
     }
     html += "</span>";
     header.innerHTML = html;
@@ -141,7 +153,7 @@ function createFileOpenSubPanel(name, revisions, index) {
     var hh = document.createElement("div");
     var h = document.createElement("div");
     h.className = "rightpanel_subcontentholder";
-    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(\"" + name + "\", \"LATEST\", false)' class='rightpanel_subcontentholder_content'>" +
+    var c = "<button type='button' class='hideall_icon' title='Show all revisions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(\"" + name + "\", \"LATEST\", false)' class='rightpanel_subcontentholder_content'>" +
         name + "&emsp;<span class='rightpanel_content_italic'>" + revisions;
     if (revisions < 2) {
         c += " revision";
@@ -151,10 +163,6 @@ function createFileOpenSubPanel(name, revisions, index) {
     c += "</span></span>";
     h.innerHTML = c;
     return h;
-}
-
-function createContestantsPanel(name) {
-
 }
 
 function stringToDom(str) {
