@@ -1,21 +1,17 @@
-window.onload = function() {
+window.onload = function () {
     listFiles();
-}
-
+};
 //Temp debug JS Output
 function writeJsDebug(input) {
     jsDebugText = String(input);
     jsDebugOutput = document.getElementById("editorfooter");
     jsDebugOutput.innerHTML += jsDebugText + " | ";
 }
-
 function writeJsNewLine() {
     document.getElementById("editorfooter").innerHTML += " ~ | ";
 }
-
 //Counter for new question IDs, TEMP
 var qidCount = 0;
-
 //make a new question ID
 function newqid() {
     newQid = "q" + qidCount;
@@ -39,7 +35,8 @@ function addquestion(title) {
     emptyquestion.title = qid;
     if (typeof title === "undefined") {
         emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder"></span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '"></div>';
-    } else {
+    }
+    else {
         emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder">' + title + '</span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '" value = "' + title + '"></div>';
     }
     document.getElementById("questionholder").appendChild(emptyquestion);
@@ -81,7 +78,8 @@ function addanswer(parentId, answer, correct) {
     if (typeof answer === undefined) {
         emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
         document.getElementById(parentId + "_holder").appendChild(emptyanswer);
-    } else {
+    }
+    else {
         emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" value="' + answer + '" id="input_answer_' + aid + '">';
         document.getElementById(parentId + "_holder").appendChild(emptyanswer);
         document.getElementById("chb_" + aid).checked = correct;
@@ -108,7 +106,8 @@ function togglequestion(qId) {
         document.getElementById(qId + "_holder").style.display = "none";
         document.getElementById("bttntoggleq_" + qId).className = "bttntoggleq-show";
         document.getElementById("bttntoggleq_" + qId).title = "Show";
-    } else {
+    }
+    else {
         document.getElementById(qId + "_holder").style.display = "block";
         document.getElementById("bttntoggleq_" + qId).className = "bttntoggleq-hide";
         document.getElementById("bttntoggleq_" + qId).title = "Hide";
@@ -150,7 +149,6 @@ function updateTitle(qId) {
     }
     document.getElementById("titleholder_" + qId).innerHTML = newTitle;
 }
-
 function expandPanel(el) {
     var actualholder = el.parentNode.parentNode;
     var children = actualholder.childNodes;
@@ -160,9 +158,8 @@ function expandPanel(el) {
         }
     }
     el.className = "showall_icon";
-    el.onclick = function() { collapsePanel(this); };
+    el.onclick = function () { collapsePanel(this); };
 }
-
 function collapsePanel(el) {
     var actualholder = el.parentNode.parentNode;
     var children = actualholder.childNodes;
@@ -172,9 +169,8 @@ function collapsePanel(el) {
         }
     }
     el.className = "hideall_icon";
-    el.onclick = function() { expandPanel(this); };
+    el.onclick = function () { expandPanel(this); };
 }
-
 function expandTest(el, nm) {
     var actualholder = el.parentNode;
     var kids = actualholder.childNodes;
@@ -187,9 +183,8 @@ function expandTest(el, nm) {
         }
     }
     el.className = "showall_icon";
-    el.onclick = function() { collapseTest(this); };
+    el.onclick = function () { collapseTest(this); };
 }
-
 function collapseTest(el) {
     var actualholder = el.parentNode;
     var kids = actualholder.childNodes;
@@ -199,9 +194,8 @@ function collapseTest(el) {
         }
     }
     el.className = "hideall_icon";
-    el.onclick = function() { expandTest(this); };
+    el.onclick = function () { expandTest(this); };
 }
-
 function cleareditor() {
     document.getElementById("questionholder").innerHTML = "";
     qidCount = 0;
