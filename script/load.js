@@ -40,14 +40,14 @@ function getFileRevisions(test, parent) {
         .then(function(json) {
             var l = json.length;
             for (var i = 0; i < l; i++) {
-                var parts = json[i].split("_");
-                var date = parts[0] + "." + parts[1] + "." + parts[2] + "-" + parts[3] + ":" + parts[4] + ":" + parts[5];
-                var holder = document.createElement("div");
+                let parts = json[i].split("_");
+                let date = parts[0] + "." + parts[1] + "." + parts[2] + "-" + parts[3] + ":" + parts[4] + ":" + parts[5];
+                let holder = document.createElement("div");
                 holder.className = "rightpanel_sub_subcontentholder";
                 holder.innerHTML = i + 1 + " - " + date;
-                holder.onclick = function() {
-                    getData(test, date, false);
-                };
+                holder.setAttribute("test", test);
+                holder.setAttribute("revision", date);
+                holder.onclick = getData.bind(holder);
                 parent.appendChild(holder);
             }
         });
@@ -69,7 +69,9 @@ function loadData(file, tname) {
     }, this);
 }
 
-function getData(file, revision, preload) {
+function getData(event) {
+    var file = this.getAttribute('test');
+    var revision = this.getAttribute('revision');
     fetch("getfile.php?file=" + file + "&revision=" + revision)
         .then(function(res) {
             var ctype = res.headers.get("content-type");
@@ -153,4 +155,9 @@ function createFileOpenSubPanel(name, revisions, index) {
 
 function createContestantsPanel(name) {
 
+}
+
+function stringToDom(str) {
+    var parser = new DOMParser()
+    return parser.parseFromString(str, "text/html");
 }
