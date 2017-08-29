@@ -70,8 +70,14 @@ function loadData(file, tname) {
 }
 
 function getData(event) {
-    var file = this.getAttribute('test');
-    var revision = this.getAttribute('revision');
+    var file, revision;
+    if (typeof this.getAttribute === "function") {
+        file = this.getAttribute('test');
+        revision = this.getAttribute('revision');
+    } else {
+        file = event.getAttribute('test');
+        revision = event.getAttribute('revision');
+    }
     fetch("getfile.php?file=" + file + "&revision=" + revision)
         .then(function(res) {
             var ctype = res.headers.get("content-type");
@@ -91,39 +97,29 @@ function getData(event) {
 }
 
 function listContestants() {
-    fetch("data/contestants.json")
-        .then(function(res) {
-            var ctype = res.headers.get("content-type");
-            if (ctype && ctype.includes("application/json")) {
-                if (res.ok) {
-                    return res.text();
-                } else {
-                    //Handle error code
-                }
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "data/contestants.json");
+    xhr.addEventListener("load", function() {
+        if (this.responseText === "") {
+            return;
+        }
+        var json;
+        try {
+            json = JSON.parse(this.responseText);
+        } catch (ex) {
+            console.log(ex);
+            return;
+        }
+        for (let group in json) {
+            let name = Object.keys(json[group])[0];
+            var obj = addgroup(name);
+            for (let contestant of json[group][name]) {
+                let f = addContestant.bind(obj);
+                f(contestant);
             }
-            throw new TypeError("Did not receive content-type application/json");
-        })
-        .then(function(rjson) {
-            initContestantEditor();
-            if (rjson === "") {
-                return;
-            }
-            var json;
-            try {
-                json = JSON.parse(rjson);
-            } catch (error) {
-                console.log(error);
-            }
-            var holder = createMainPanel("contestants");
-            var keys = Object.keys(json);
-            var l = keys.length;
-            for (var i = 0; i < l; i++) {
-                var testname = keys[i];
-                var revisions = json[testname];
-                holder.getElementsByClassName("rightpanel_content")[0].appendChild(createFileOpenSubPanel(testname, revisions, i));
-            }
-            document.getElementById("holderright").appendChild(holder);
-        });
+        }
+    });
+    xhr.send();
 }
 
 function createMainPanel(type) {
@@ -153,7 +149,7 @@ function createFileOpenSubPanel(name, revisions, index) {
     var hh = document.createElement("div");
     var h = document.createElement("div");
     h.className = "rightpanel_subcontentholder";
-    var c = "<button type='button' class='hideall_icon' title='Show all revisions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(\"" + name + "\", \"LATEST\", false)' class='rightpanel_subcontentholder_content'>" +
+    var c = "<button type='button' class='hideall_icon' title='Show all revisions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(this)' test='" + name + "' revision='LATEST' class='rightpanel_subcontentholder_content'>" +
         name + "&emsp;<span class='rightpanel_content_italic'>" + revisions;
     if (revisions < 2) {
         c += " revision";

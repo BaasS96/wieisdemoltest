@@ -6,11 +6,13 @@
     font-family: 'Roboto';
     src: url(Roboto-Regular.ttf);
 }
+
 html {
     width: 100%;
     height: 100%;
     margin: 0px;
 }
+
 #body {
     background-color: #212121;
     font-family: 'Roboto', sans-serif;
@@ -21,14 +23,17 @@ html {
     margin: 0px;
     overflow: hidden;
 }
+
 #editorholder {
     height: calc(100vh - 1.9em);
 }
+
 #mainmenuholder {
     width: 100%;
     padding: 0.3em;
     background-color: #000000;
 }
+
 #questionholder {
     width: 60%;
     height: 100%;
@@ -36,17 +41,20 @@ html {
     display: block;
     float: left;
 }
+
 .uberholder {
     display: block;
     width: 100vw;
     height: calc(100% - 1.9em);
 }
+
 .holderright {
     display: inline-block;
     width: 40%;
     height: 100%;
     background-color: #323232;
 }
+
 .rightpanel {
     width: 100%;
     height: auto;
@@ -55,22 +63,27 @@ html {
     color: #757575;
     transition: color 0.3s ease;
 }
+
 .rightpanel:hover {
     color: #FFFFFF;
 }
+
 .rightpanel_header {
     width: 100%;
     padding: 0.1em 0.1em 0.1em 0.1em;
     background-color: #434343;
     font-size: 1em;
 }
+
 .rightpanel_content {
     padding-left: 2em;
     font-size: 0.8em;
 }
+
 .rightpanel_content_italic {
     font-style: italic;
 }
+
 .rightpanel_subcontentholder {
     display: block;
     padding-bottom: 0.2em;
@@ -78,9 +91,11 @@ html {
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
+
 .rightpanel_subcontentholder:hover {
     background-color: #212121;
 }
+
 .rightpanel_sub_subcontentholder {
     display: block;
     margin-left: 2em;
@@ -88,15 +103,19 @@ html {
     margin-top: 0.2em;
     transition: color 0.3s ease;
 }
+
 .rightpanel_sub_subcontentholder:hover {
     color: #CCCCFF;
 }
+
 .rightpanel_subcontentholder_content {
     transition: color 0.3s ease;
 }
+
 .rightpanel_subcontentholder_content:hover {
     color: #AAAAFF;
 }
+
 #editorfooter {
     flex: 0;
     width: 100%;
@@ -109,12 +128,15 @@ html {
     display: block;
     bottom: 0;
 }
+
 #editorfooter:hover {
     color: #FFFFFF;
 }
+
 .question_holder {
     margin-left: 1.4em;
 }
+
 .questionholder {
     display: block;
     padding: 0.4em;
@@ -122,13 +144,16 @@ html {
     color: #757575;
     background-color: #212121;
 }
+
 .questionholder:hover {
     color: #FFFFFF;
     background-color: #303030;
 }
+
 .questionholder:hover input {
     color: #FFFFFF;
 }
+
 .answerholder {
     margin-left: 1em;
     margin-top: 0.2em;
@@ -137,12 +162,15 @@ html {
     vertical-align: bottom;
     line-height: 1em;
 }
+
 .titleholder {
     font-style: italic;
 }
+
 .error {
     color: #D32F2F;
 }
+
 .bttntoggleq-show {
     background-color: transparent;
     margin-right: 0.4em;
@@ -153,9 +181,11 @@ html {
     background-size: cover;
     background-image: url(../images/unfold_more_grey_96x96.png);
 }
+
 .bttntoggleq-show:hover {
     background-image: url(../images/unfold_more_white_96x96.png)
 }
+
 .bttntoggleq-hide {
     background-color: transparent;
     margin-right: 0.4em;
@@ -166,9 +196,11 @@ html {
     background-size: cover;
     background-image: url(../images/unfold_less_grey_96x96.png);
 }
+
 .bttntoggleq-hide:hover {
     background-image: url(../images/unfold_less_white_96x96.png);
 }
+
 input {
     background: none;
     border: none;
@@ -176,12 +208,15 @@ input {
     margin-left: 1em;
     transition: color 0.5s ease;
 }
+
 input:hover {
     color: #FFFFFF;
 }
+
 input:focus {
     color: #FFFFFF;
 }
+
 .delete_icon {
     background-color: transparent;
     border: none;
@@ -191,9 +226,11 @@ input:focus {
     background-size: cover;
     background-image: url(../images/delete_grey_96x96.png);
 }
+
 .delete_icon:hover {
     background-image: url(../images/delete_white_96x96.png);
 }
+
 .add_icon {
     background-color: transparent;
     border: none;
@@ -203,9 +240,11 @@ input:focus {
     background-size: cover;
     background-image: url(../images/add_grey_96x96.png);
 }
+
 .add_icon:hover {
     background-image: url(../images/add_white_96x96.png);
 }
+
 .save_icon {
     background-color: transparent;
     border: none;
@@ -215,9 +254,25 @@ input:focus {
     background-size: cover;
     background-image: url(../images/save_grey_96x96.png);
 }
+
 .save_icon:hover {
     background-image: url(../images/save_white_96x96.png);
 }
+
+.back_icon {
+    background-color: transparent;
+    border: none;
+    width: 1.7em;
+    height: 1.7em;
+    outline: none;
+    background-size: cover;
+    background-image: url(../images/ic_arrow_back_grey_48dp.png);
+}
+
+.back_icon:hover {
+    background-image: url(../images/ic_arrow_back_white_48dp.png);
+}
+
 .addq_icon {
     background-color: transparent;
     border: none;
@@ -227,9 +282,11 @@ input:focus {
     background-size: cover;
     background-image: url(../images/my_library_add_grey_96x96.png);
 }
+
 .addq_icon:hover {
     background-image: url(../images/my_library_add_white_96x96.png);
 }
+
 .showall_icon {
     background-color: transparent;
     border: none;
@@ -239,9 +296,11 @@ input:focus {
     background-size: cover;
     background-image: url(../images/unfold_more_grey_96x96.png);
 }
+
 .showall_icon:hover {
     background-image: url(../images/unfold_more_white_96x96.png);
 }
+
 .hideall_icon {
     background-color: transparent;
     border: none;
@@ -251,12 +310,15 @@ input:focus {
     background-size: cover;
     background-image: url(../images/unfold_less_grey_96x96.png);
 }
+
 .hideall_icon:hover {
     background-image: url(../images/unfold_less_white_96x96.png);
 }
+
 .correctanswer {
     display: none;
 }
+
 .chb_label {
     display: inline-block;
     border: none;
@@ -267,13 +329,16 @@ input:focus {
     margin-left: 0.2em;
     margin-bottom: -0.15em;
 }
+
 .chb_label:hover {
     background-image: url(../images/check_box_outline_blank_white_96x96.png);
 }
-input[type=checkbox]:checked + label {
+
+input[type=checkbox]:checked+label {
     background-image: url(../images/check_box_grey_96x96.png);
 }
-input[type=checkbox]:checked + label:hover {
+
+input[type=checkbox]:checked+label:hover {
     background-image: url(../images/check_box_white_96x96.png);
 }
 

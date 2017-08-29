@@ -1,15 +1,15 @@
 function saveData() {
     var questions = [];
     var children = document.getElementById("questionholder").childNodes;
-    for (i=0; i<(children.length-1); i++) {
+    for (i = 0; i < (children.length - 1); i++) {
         var questionTitle = document.getElementById("input_title_q" + i).value;
         var object = {
-            "id" : i,
-            "title" : questionTitle
+            "id": i,
+            "title": questionTitle
         };
         var answers = [];
         var questionChildren = document.getElementById("q" + i + "_holder").childNodes;
-        for (j = 0; j<(questionChildren.length-2); j++) {
+        for (j = 0; j < (questionChildren.length - 2); j++) {
             var answerTitle = document.getElementById("input_answer_q" + i + "_a" + j).value;
             var answerCorrect = document.getElementById("chb_q" + i + "_a" + j).checked;
             var o = {
@@ -25,6 +25,7 @@ function saveData() {
     console.log(testdatabase);
     sendData(testdatabase);
 }
+
 function sendData(data) {
     var name = document.getElementById("test_name").value;
     name = name.replace(/\s+/g, '_').toLowerCase();
@@ -34,15 +35,56 @@ function sendData(data) {
     timestring += save.getMonth() + "_";
     timestring += save.getFullYear() + "_";
     timestring += save.getHours() + "_" + save.getMinutes() + "_" + save.getSeconds();
-    fetch("savefile.php?name=" + name + "&save=" +  timestring + "&data=" + data)
-    .then(function(res){
-        if (res.ok) {
-            return res.text();
-        } else {
-            document.getElementById("lastsaved").innerHTML = "An error occured while saving: " + res.status + " - " + res.statusText;
+    fetch("savefile.php?name=" + name + "&save=" + timestring + "&data=" + data)
+        .then(function(res) {
+            if (res.ok) {
+                return res.text();
+            } else {
+                document.getElementById("lastsaved").innerHTML = "An error occured while saving: " + res.status + " - " + res.statusText;
+            }
+        })
+        .then(function(succes) {
+            document.getElementById("lastsaved").innerHTML = timestring;
+        });
+}
+
+function saveContestants() {
+    var groups = [];
+    let qholder = document.getElementById('questionholder');
+    if (currentid === 0) {
+        let title = document.getElementById("titleholder_c0").innerHTML;
+        var o = {};
+        o[title] = [];
+        let gholder = document.getElementById("c0");
+        for (var l = 2; l < gholder.childNodes.length; l++) {
+            let nm = gholder.childNodes[l].lastChild.value;
+            o[title].push(nm);
         }
-    })
-    .then(function(succes) {
-        document.getElementById("lastsaved").innerHTML = timestring;
-    });
+        groups.push(o);
+    } else {
+        for (var i = 0; i < currentid;) {
+            let title = document.getElementById("titleholder_c" + i).innerHTML;
+            var o = {};
+            o[title] = [];
+            let gholder = document.getElementById("c" + i);
+            for (var l = 2; l < gholder.childNodes.length; l++) {
+                let nm = gholder.childNodes[l].lastChild.value;
+                o[title].push(nm);
+            }
+            groups.push(o);
+        }
+    }
+    sendContestantData(JSON.stringify(groups));
+}
+
+function sendContestantData(data) {
+    console.log(data);
+    fetch("updatecontestants.php?data=" + data)
+        .then(function(res) {
+            if (res.ok) {
+                return res.status;
+            }
+        }).then(function(res) {
+            console.log(res);
+        });
 }

@@ -5,15 +5,15 @@
             WIDM Test editor
         </title>
         <link rel='stylesheet' href='style/testeditor.css'>
+        <script src="script/contestanteditor.js"></script>
         <script src="script/testeditor.js"></script>
         <script src="script/load.js"></script>
         <script src="script/save.js"></script>
     </head>
     <body id="body">
-        <form action="updatetest.php" method="post">
             <section id="editorholder">
                 <div id="mainmenuholder">
-                    <button type="button" class="save_icon" title="Save test" onclick="saveData();">&nbsp;</button>
+                    <button type="button" class="save_icon" title="Save test" onclick="saveData();" id="save">&nbsp;</button>
                     &emsp;
                     <button type="button" class="addq_icon" title="Add question" onclick="addquestion();" id="add">&nbsp;</button>
                     <button type="button" class="showall_icon" title="Show all questions" onclick="showall();">&nbsp;</button>
@@ -31,6 +31,5 @@
                     </div>
                 </div>
             </section>
-        </form>
     </body>
 </html>

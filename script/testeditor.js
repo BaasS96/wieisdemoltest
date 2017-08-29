@@ -160,7 +160,7 @@ function expandPanel(el) {
     if (p.hasAttribute("type")) {
         attr = p.getAttribute("type");
         if (p.getAttribute("type") === "contestants") {
-            listContestants();
+            initContestantEditor();
         } else {
             loadPublishInfo();
         }
@@ -220,30 +220,30 @@ function cleareditor() {
     qidCount = 0;
 }
 
+function backtoeditor() {
+    saveContestants();
+    cleareditor();
+    let add = document.getElementById("add");
+    add.title = "Add question";
+    add.onclick = addquestion;
+    let save = document.getElementById("save");
+    save.title = "Save test";
+    save.className = "save_icon";
+    save.onclick = saveData;
+    let qwolder = document.getElementById('questionholder');
+    document.getElementById("questionholder").innerHTML = sessionStorage.getItem("lasteditedtest");
+}
+
 function initContestantEditor() {
+    let html = document.getElementById('questionholder').innerHTML
+    sessionStorage.lasteditedtest = html;
     cleareditor();
     let add = document.getElementById("add");
     add.title = "Add group";
     add.onclick = addgroup;
-}
-
-function addgroup() {
-    if (qidCount === 1) {
-        emptyquestion = document.createElement("div");
-        emptyquestion.id = newqid();
-        emptyquestion.className = "questionholder";
-        qid = emptyquestion.id;
-        emptyquestion.title = qid;
-        if (typeof title === "undefined") {
-            emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder"></span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '"></div>';
-        } else {
-            emptyquestion.innerHTML = '<div><button type="button" class="bttntoggleq-hide" title="Hide" id="bttntoggleq_' + qid + '" onclick="togglequestion(\'' + qid + '\');">&nbsp;</button><button type="button" class="delete_icon" title="Remove question" onclick="removequestion(this)">&nbsp;</button>&emsp;<span id="titleholder_' + qid + '" class="titleholder">' + title + '</span></div><div id="' + qid + '_holder" class="question_holder"><button type="button" class="add_icon" title="Add answer" onclick="addanswer(\'' + qid + '\');">&nbsp;</button><input type="text" placeholder="Set title" onKeyUp="updateTitle(\'' + qid + '\');" id="input_title_' + qid + '" value = "' + title + '"></div>';
-        }
-        document.getElementById("questionholder").appendChild(emptyquestion);
-        updateTitle(qid);
-        togglequestion(qid);
-        if (typeof title !== "undefined") {
-            return qid;
-        }
-    }
+    let save = document.getElementById("save");
+    save.title = "Back to testeditor";
+    save.className = "back_icon";
+    save.onclick = backtoeditor;
+    listContestants();
 }

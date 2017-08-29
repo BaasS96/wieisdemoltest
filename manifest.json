@@ -1,0 +1,6 @@
+{
+  "name": "wieisdemoltest",
+  "short_name": "wieisdemoltest",
+  "start_url": "/",
+  "display": "standalone"
+}
