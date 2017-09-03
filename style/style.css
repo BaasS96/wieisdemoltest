@@ -37,7 +37,7 @@
     display: table-cell;
 }
 .contentholder {
-    display: none;
+    display: auto;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
@@ -72,4 +72,42 @@
 .input-bttn-wrapper {
     display: block;
     column-count: 2;
+}
+
+#LOGON {
+    display: auto;
+}
+#QUESTIONA, #QUESTIONB {
+    display: none;
+    vertical-align: middle;
+}
+
+.logon {
+    vertical-align: middle;
+    height: calc(100vh - 1.5em);
+}
+.logon_input {
+    height: 2em;
+    width: 10em;
+    font-size: 1em;
+    color: #404040;
+    background: transparent;
+    border: none;
+    transition: color .3s ease-in-out;
+}
+.logon_input:hover {
+    color: #FFFFFF;
+}
+.logon_submit {
+    height: 2em;
+    width: 10em;
+    font-size: 1em;
+    color: #404040;
+    background: transparent;
+    border: none;
+    transition: color .3s ease-in-out;
+    text-align: left;
+}
+.logon_submit:hover {
+    color: #77FF77;
 }
