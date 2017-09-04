@@ -1,26 +1,23 @@
 <?php
-    if (isset($_GET['name'], $_GET['pin'], $_GET['test'])) {
+    if (isset($_GET['name'], $_GET['pin'])) {
         $name = $_GET['name'];
         $pin = $_GET['pin'];
-        $test = $_GET['test'];
-        if (is_dir("data\\$test")) {
-            $json = json_decode(file_get_contents("data\\$test\contestants.json"));
-            if (array_key_exists($name, $json)) {
-                if ($json[$name] == $pin) {
-                    //We're good
-                    echo "";
-                } else {
-                    goto error;
+        if (file_exists("data/contestants.json")) {
+            $data = file_get_contents("data/contestants.json");
+            $data = json_decode($data);
+            foreach ($data as $key => $value) {
+                foreach($value as $key_ => $value_) {
+                    foreach($value_ as $value__) {
+                        $n = key($value__);
+                        $c = $value__->$n->code;
+                        if ($name == $n && $pin = $c) {
+                            echo "OK";
+                            exit;
+                        }
+                    }
                 }
-            } else {
-                goto error;
             }
-        } else {
-            goto error;
         }
-    } else {
-        goto error;
     }
-    error:
-    echo "error";
+    echo "FALSE";
 ?>

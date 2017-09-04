@@ -1,3 +1,4 @@
+var ws;
 function initTest() {
     //Disable right-clicking
     document.addEventListener('contextmenu', event => event.preventDefault());
@@ -11,11 +12,10 @@ function initializeTest(name, pin) {
         }
     })
     .then(function(txt) {
-        if (txt === "") {
-            //authorized
-            return true;
+        if (txt === "OK") {
+            //Authorized
         } else {
-            return txt;
+            //Display error
         }
     });
 }
@@ -39,6 +39,25 @@ function startTest() {
     }
 }
 
+//SECTION -- WEBSOCKET CONNECTIONS
+// THIS Handles connection to the server that handles progress, answer checking reporting to supervisors etc...
+
+function initConnection() {
+    var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5890";
+    ws = new WebSocket(url);
+    ws.onopen = function(event) {
+
+    };
+    ws.onmessage = function(event) {
+
+    };
+    ws.onclose = function(event) {
+
+    };
+    ws.onerror = function(event) {
+
+    };
+}
 //--------------------
 //OLD TEST SYSTEM
 //KEEPING THIS FOR NOW
