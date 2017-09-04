@@ -1,3 +1,4 @@
+var currenttest, rev;
 function listFiles() {
     fetch("listtests.php")
         .then(function(res) {
@@ -12,7 +13,7 @@ function listFiles() {
             throw new TypeError("Did not receive content-type application/json");
         })
         .then(function(json) {
-            var holder = createMainPanel();
+            var holder = createMainPanel("file");
             var keys = Object.keys(json);
             var l = keys.length;
             for (var i = 0; i < l; i++) {
@@ -70,8 +71,16 @@ function loadData(file, tname) {
 }
 
 function getData(event) {
-    var file = this.getAttribute('test');
-    var revision = this.getAttribute('revision');
+    var file, revision;
+    if (typeof this.getAttribute === "function") {
+        file = this.getAttribute('test');
+        revision = this.getAttribute('revision');
+    } else {
+        file = event.getAttribute('test');
+        revision = event.getAttribute('revision');
+    }
+    currenttest = file;
+    rev = revision;
     fetch("getfile.php?file=" + file + "&revision=" + revision)
         .then(function(res) {
             var ctype = res.headers.get("content-type");
@@ -90,30 +99,30 @@ function getData(event) {
         });
 }
 
-function listContestantLists() {
-    fetch("listcontestantlists.php")
-        .then(function(res) {
-            var ctype = res.headers.get("content-type");
-            if (ctype && ctype.includes("application/json")) {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    //Handle error code
-                }
+function listContestants() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "data/contestants.json");
+    xhr.addEventListener("load", function() {
+        if (this.responseText === "") {
+            return;
+        }
+        var json;
+        try {
+            json = JSON.parse(this.responseText);
+        } catch (ex) {
+            console.log(ex);
+            return;
+        }
+        for (let group in json) {
+            let name = Object.keys(json[group])[0];
+            var obj = addgroup(name);
+            for (let contestant of json[group][name]) {
+                let f = addContestant.bind(obj);
+                f(contestant);
             }
-            throw new TypeError("Did not receive content-type application/json");
-        })
-        .then(function(json) {
-            var holder = createMainPanel("contestants");
-            var keys = Object.keys(json);
-            var l = keys.length;
-            for (var i = 0; i < l; i++) {
-                var testname = keys[i];
-                var revisions = json[testname];
-                holder.getElementsByClassName("rightpanel_content")[0].appendChild(createFileOpenSubPanel(testname, revisions, i));
-            }
-            document.getElementById("holderright").appendChild(holder);
-        });
+        }
+    });
+    xhr.send();
 }
 
 function createMainPanel(type) {
@@ -122,11 +131,13 @@ function createMainPanel(type) {
     holder.className = "rightpanel";
     var header = document.createElement("div");
     header.className = "rightpanel_header";
-    var html = "<button type='button' class='showall_icon' title='Show all questions' onclick='collapsePanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>";
+    var html;
     if (type === "file") {
-        html += "Load File";
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='collapsePanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Load file";
+    } else if (type === "publishinfo") {
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Publication info";
     } else {
-        html += "Contestants";
+        html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Contestants";
     }
     html += "</span>";
     header.innerHTML = html;
@@ -141,7 +152,7 @@ function createFileOpenSubPanel(name, revisions, index) {
     var hh = document.createElement("div");
     var h = document.createElement("div");
     h.className = "rightpanel_subcontentholder";
-    var c = "<button type='button' class='hideall_icon' title='Show all questions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(\"" + name + "\", \"LATEST\", false)' class='rightpanel_subcontentholder_content'>" +
+    var c = "<button type='button' class='hideall_icon' title='Show all revisions' onclick='expandTest(this, \"" + name + "\");'>&nbsp;</button> <span id='testname' onclick='getData(this)' test='" + name + "' revision='LATEST' class='rightpanel_subcontentholder_content'>" +
         name + "&emsp;<span class='rightpanel_content_italic'>" + revisions;
     if (revisions < 2) {
         c += " revision";
@@ -151,10 +162,6 @@ function createFileOpenSubPanel(name, revisions, index) {
     c += "</span></span>";
     h.innerHTML = c;
     return h;
-}
-
-function createContestantsPanel(name) {
-
 }
 
 function stringToDom(str) {
