@@ -1,3 +1,4 @@
+var currenttest, rev;
 function listFiles() {
     fetch("listtests.php")
         .then(function(res) {
@@ -78,6 +79,8 @@ function getData(event) {
         file = event.getAttribute('test');
         revision = event.getAttribute('revision');
     }
+    currenttest = file;
+    rev = revision;
     fetch("getfile.php?file=" + file + "&revision=" + revision)
         .then(function(res) {
             var ctype = res.headers.get("content-type");

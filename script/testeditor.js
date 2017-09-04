@@ -247,3 +247,21 @@ function initContestantEditor() {
     save.onclick = backtoeditor;
     listContestants();
 }
+
+function publishTest() {
+    let data = new FormData();
+    data.set("test", currenttest);
+    data.set("revision",rev);
+    fetch("publishtest.php", {
+        method: "POST",
+        body: data
+    }).then(function(res) {
+        if (res.ok) {
+            return res.json();
+        } else {
+            //Handle error
+        }
+    }).then(function(json) {
+        //Receive codes here
+    });
+} 
