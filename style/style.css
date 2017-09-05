@@ -73,7 +73,7 @@
 }
 
 .input-bttn-txt {
-    font-size: 0.9em;
+    font-size: 0.8em;
     vertical-align: bottom;
     margin-left: 1em;
 }
@@ -85,7 +85,6 @@
 
 .input-bttn-wrapper {
     display: block;
-    column-count: 2;
 }
 
 #LOGON {

@@ -33,32 +33,13 @@
                     <img src="images/WIDM_LOGO_BLACK.jpg" id="WIDM_LOGO" />
                 </div>
                 <div class="TD">
-                    <span class="H1" id="QQuestion">9. &nbsp; Wat is het geluksgetal van de Mol?</span>
+                    <span class="H1" id="QQuestion"></span>
                 </div>
             </div>
             <div class="TR" id="QUESTIONB">
                 <div class="TD"></div>
                     <div class="input-bttn-wrapper" id="QAnswers">
-                        <div class="input-bttn-holder">
-                            <button type="submit" class="input-bttn">&nbsp;</button>
-                            <span class="input-bttn-txt">6<span>
-                        </div>
-                        <div class="input-bttn-holder">
-                            <button type="submit" class="input-bttn">&nbsp;</button>
-                            <span class="input-bttn-txt">7<span>
-                        </div>
-                        <div class="input-bttn-holder">
-                            <button type="submit" class="input-bttn">&nbsp;</button>
-                            <span class="input-bttn-txt">8<span>
-                        </div>
-                        <div class="input-bttn-holder">
-                            <button type="submit" class="input-bttn">&nbsp;</button>
-                            <span class="input-bttn-txt">9<span>
-                        </div>
-                        <div class="input-bttn-holder">
-                            <button type="submit" class="input-bttn">&nbsp;</button>
-                            <span class="input-bttn-txt">12<span>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

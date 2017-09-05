@@ -1,4 +1,5 @@
 var ws;
+var testStarted = false;
 window.onload = function() {
     console.log(getLocalIP());
 }
@@ -37,7 +38,7 @@ function initializeTest() {
 }
 
 function startTest() {
-
+    testStarted = true;
     let logonDiv = document.getElementById("LOGON");
     let questionaDiv = document.getElementById("QUESTIONA");
     let questionbDiv = document.getElementById("QUESTIONB");
@@ -57,10 +58,13 @@ function startTest() {
 function loadQuestion(question, answers) {
     var questionTitle = question.title;
     var questionIndex = question.index;
-    var questionQuestion = question.index + ". " + question.title;
+    var questionQuestion = question.index + ". &nbsp; " + question.title;
     var questionAnswers;
     for (var i = 0; i < answers.length; i++) {
         questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
+    }
+    if (answers.length > 4) {
+        document.getElementById("QAnswers").style.columns = "2";
     }
     document.getElementById("QQuestion").innerHTML = questionQuestion;
     document.getElementById("QAnswers").innerHTML = questionAnswers;
