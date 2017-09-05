@@ -4,7 +4,7 @@
     class ResultServer extends WebSocketServer {
 
         protected function process($user, $message) {
-            processMessage($message);
+            $this->processMessage($message);
         }
 
         protected function connected($user) {
