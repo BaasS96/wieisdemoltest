@@ -1,8 +1,12 @@
 <?php
     require_once("ws/websockets.php");
-
+    require_once("testhandler.php");
     class TestServer extends WebsocketServer {
 
+
+        function __constructor() {
+            loadCurrentTest();
+        }
 
         protected function process($user, $message) {
 

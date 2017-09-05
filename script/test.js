@@ -1,4 +1,7 @@
 var ws;
+window.onload = function() {
+    console.log(getLocalIP());
+}
 function initTest() {
     //Disable right-clicking
     document.addEventListener('contextmenu', event => event.preventDefault());
@@ -14,6 +17,7 @@ function initializeTest(name, pin) {
     .then(function(txt) {
         if (txt === "OK") {
             //Authorized
+            initConnection();
         } else {
             //Display error
         }
@@ -46,7 +50,7 @@ function initConnection() {
     var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5890";
     ws = new WebSocket(url);
     ws.onopen = function(event) {
-
+        
     };
     ws.onmessage = function(event) {
 
@@ -55,7 +59,7 @@ function initConnection() {
 
     };
     ws.onerror = function(event) {
-
+        //Display an error. @BaasS
     };
 }
 //--------------------
