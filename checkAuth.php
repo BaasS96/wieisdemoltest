@@ -10,7 +10,7 @@
                     foreach($value_ as $value__) {
                         $n = key($value__);
                         $c = $value__->$n->code;
-                        if ($name == $n && $pin = $c) {
+                        if ($name == $n && $pin == $c) {
                             echo "OK";
                             exit;
                         }
