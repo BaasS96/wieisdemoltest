@@ -17,6 +17,7 @@
             <div class="TR" id="LOGON">
                 <div class="TD logon">
                     <div>
+                        <div id="errMSSG">Probeer het opnieuw.</div>
                         <input id="name" type="text" placeholder="Naam" class="logon_input">
                         <br>
                         <input id="pin" type="password" placeholder="Pin" class="logon_input">

@@ -30,7 +30,8 @@ function initializeTest() {
                 initConnection();
                 startTest();
             } else {
-                //Display error
+                document.getElementById("errMSSG").style.display = "block";
+                document.getElementById("pin").value = "";
             }
         });
 }
