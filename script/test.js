@@ -1,5 +1,7 @@
 var ws;
 var testStarted = false;
+var nm;
+var testStartedTime;
 window.onload = function() {
     console.log(getLocalIP());
 }
@@ -28,6 +30,7 @@ function initializeTest() {
         .then(function(txt) {
             if (txt === "OK") {
                 //Authorized
+                nm = name;
                 initConnection();
                 startTest();
             } else {
@@ -52,14 +55,13 @@ function startTest() {
         questionaDiv.style.opacity = "1.0";
         questionbDiv.style.opacity = "1.0";
     }, 1100);
-    requestStart();
 }
 
 function loadQuestion(question, answers) {
     var questionTitle = question.title;
     var questionIndex = question.index;
-    var questionQuestion = question.index + ". &nbsp; " + question.title;
-    var questionAnswers;
+    var questionQuestion = (question.index + 1) + ". &nbsp; " + question.title;
+    var questionAnswers = "";
     for (var i = 0; i < answers.length; i++) {
         questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
     }
@@ -69,7 +71,7 @@ function loadQuestion(question, answers) {
     document.getElementById("QQuestion").innerHTML = questionQuestion;
     document.getElementById("QAnswers").innerHTML = questionAnswers;
 }
-
+ 
 function buttonClicked(questionIndex) {
     let objectToSend = { type: "answer", index: questionIndex };
     ws.send(JSON.stringify(objectToSend));
@@ -82,7 +84,7 @@ function initConnection() {
     var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5890";
     ws = new WebSocket(url);
     ws.onopen = function(event) {
-
+        requestStart();
     };
     ws.onmessage = function(event) {
         let responseData = JSON.parse(event.data);
@@ -98,6 +100,14 @@ function initConnection() {
     ws.onerror = function(event) {
         //Display an error. @BaasS
     };
+}
+
+function requestStart() {
+    let o = {
+        type: "starttest",
+        name: nm
+    };
+    ws.send(JSON.stringify(o));
 }
 //--------------------
 //OLD TEST SYSTEM
