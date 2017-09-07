@@ -1,12 +1,14 @@
 <?php
     class User {
 
-        protected $name;
-        protected $group;
-        protected $id;
-        protected $atquestionindex = -1;
+        public $name;
+        public $group;
+        public $id;
+        public $atquestionindex = -1;
         protected $socket;
-        protected $score = 0;
+        public $score = 0;
+        public $ended = false;
+        public $time = 0;
 
         function __construct($socket, $nm) {
             $this->socket = $socket;

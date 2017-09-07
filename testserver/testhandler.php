@@ -19,7 +19,7 @@
             } else {
                 $u = new User($user, $name);
                 $u->incrementQuestionCount();
-                $instances[$us] = $u;
+                $this->instances[$us] = $u;
                 $this->server->_send($user, $this->test->getQuestionAtIndex(0));
             }
         }
@@ -30,6 +30,25 @@
                 $this->instances[$us]->score++;
             }
             $this->sendNextQuestion($user);
+        }
+
+        function endTest($user, $time) {
+            $us = $user->id;
+            $this->instances[$us]->ended = true;
+            $this->instances[$us]->time = $time;
+        }
+
+        function finish($user) {
+            $us = $user->id;
+            $resultsdir = $this->test->resolveResultsDirURL();
+            if (!is_dir($resultsdir)) {
+                mkdir($resultsdir);
+            }
+            $data = serialize($this->instances[$us]);
+            $file = $resultsdir . "/" . $this->instances[$us]->name . ".result";
+            file_put_contents($file, $data);
+            //unset($this->instances[$us]);
+            return $data;
         }
 
         function loadCurrentTest() {

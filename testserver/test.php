@@ -10,10 +10,6 @@
             $this->revision = $r;
             $this->questions = $q;
             $this->numberofquestions = count($q);
-            echo $n;
-            echo $r;
-            var_dump($q);
-            echo count($q);
         }
 
         function getQuestionAtIndex($index) {
@@ -34,7 +30,7 @@
                 $o = [
                     "type" => "question",
                     "lastquestion" => true,
-                    "question" => "De test is nu afgelopen.",
+                    "data" => ["title" => "De test is nu afgelopen.", "index" => $index],
                     "answers" => ["OK"]
                 ];
                 return json_encode($o);
@@ -43,12 +39,17 @@
 
         function checkAnswer($index, $answer) {
             $arrayofanswers = $this->questions[$index];
-            foreach ($arrayofanswers as $element) {
+            foreach ($arrayofanswers->answers as $element) {
                 if ($element->title == $answer) {
                     return $element->correct;                
                 }
             }
             return false;
+        }
+
+        function resolveResultsDirURL() {
+            $url = "../data/" . $this->name . "/" . $this->name . "_results";
+            return $url;
         }
     }
 ?>
