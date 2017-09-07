@@ -46,16 +46,18 @@ function initializeTest() {
 
 function startTest() {
     testStarted = true;
-    document.getElementById("pin").value = "";
-    document.getElementById("name").value = "";
     let logonDiv = document.getElementById("LOGON");
     let questionaDiv = document.getElementById("QUESTIONA");
     let questionbDiv = document.getElementById("QUESTIONB");
     logonDiv.style.opacity = "0.0";
     setTimeout(function() {
+        document.getElementById("pin").value = "";
+        document.getElementById("name").value = "";
+        logonDiv.style.display = "none";
         questionaDiv.style.display = "block";
         questionbDiv.style.display = "block";
-        logonDiv.style.display = "none";
+        questionaDiv.style.opacity = "0.0";
+        questionbDiv.style.opacity = "0.0";
     }, 1000);
     setTimeout(function() {
         questionaDiv.style.opacity = "1.0";
@@ -76,6 +78,10 @@ function loadQuestion(question, answers) {
     }
     document.getElementById("QQuestion").innerHTML = questionQuestion;
     document.getElementById("QAnswers").innerHTML = questionAnswers;
+    setTimeout(function() {
+        document.getElementById("QUESTIONA").style.opacity = "1.0"
+        document.getElementById("QUESTIONB").style.opacity = "1.0"
+    }, 200);
 }
 
 function loadLastQuestion(question, answers) {
@@ -85,8 +91,12 @@ function loadLastQuestion(question, answers) {
 }
 
 function buttonClicked(questionIndex) {
-    let objectToSend = { type: "answer", index: questionIndex };
-    ws.send(JSON.stringify(objectToSend));
+    document.getElementById("QUESTIONA").style.opacity = "0.0"
+    document.getElementById("QUESTIONB").style.opacity = "0.0"
+    setTimeout(function() {
+        let objectToSend = { type: "answer", index: questionIndex };
+        ws.send(JSON.stringify(objectToSend));
+    }, 1000);
 }
 
 //SECTION -- WEBSOCKET CONNECTIONS
