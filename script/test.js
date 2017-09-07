@@ -43,6 +43,8 @@ function initializeTest() {
 
 function startTest() {
     testStarted = true;
+    document.getElementById("pin").value = "";
+    document.getElementById("name").value = "";
     let logonDiv = document.getElementById("LOGON");
     let questionaDiv = document.getElementById("QUESTIONA");
     let questionbDiv = document.getElementById("QUESTIONB");
