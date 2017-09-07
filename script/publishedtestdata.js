@@ -155,6 +155,13 @@ function updateEnd(uId, uProg, uRes, uTime) {
     document.getElementById(timeDiv).innerHTML = uTime;
 }
 
+function updateGroup(gId, gRes, gTime) {
+    let resDiv = gId + "result";
+    let timeDiv = gId + "time";
+    document.getElementById(resDiv).innerHTML = gRes;
+    document.getElementById(timeDiv).innerHTML = gTime;
+}
+
 //SECTION -- WEBSOCKET CONNECTIONS
 // THIS Handles connection to the server that handles progress, answer checking reporting to supervisors etc...
 
@@ -174,6 +181,8 @@ function initConnection() {
             updateProgress(responseData.id, responseData.progress, responseData.result);
         } else if (responseData.type === "progressend") {
             updateEnd(responseData.id, responseData.progress, responseData.result, responseData.time);
+        } else if (responseData.type === "progressgroup") {
+            updateGroup(responseData.id, responseData.result, responsedata.time)
         }
     };
     ws.onclose = function(event) {
