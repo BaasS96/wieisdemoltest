@@ -5,6 +5,20 @@ var testStartedTime;
 window.onload = function() {
 
 }
+
+function toFullScreen() {
+    document.body.mozRequestFullScreen();
+    document.getElementById("bttnFullscreen").style.display = "none";
+}
+
+function checkFullscreen() {
+    if (!window.fullScreen) {
+        document.getElementById("bttnFullscreen").style.display = "block";
+    } else {
+        document.getElementById("bttnFullscreen").style.display = "none";
+    }
+}
+
 window.onkeypress = function(event) {
     if (!testStarted) {
         if (event.keyCode === 13) {

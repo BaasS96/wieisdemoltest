@@ -8,11 +8,12 @@
         <!--<script src="script/load.js"></script>!-->
         <script src="script/test.js"></script>
     </head>
-    <body id="body" onload="initTest();">
+    <body id="body" onload="initTest();" onresize="checkFullscreen();">
         <div class="widm-logo-blur-holder">
             <img src="images/WIDM_LOGO_BLACK_BLURRED.jpg" class="widm-logo-blur" alt="" />
         </div>
         <div id="content" class="TB contentholder">
+            <button type="button" onclick="toFullScreen();" id="bttnFullscreen" title="Fullscreen">FULLSCREEN</button>
         <!-- LOGON SCREEN !-->
             <div class="TR" id="LOGON">
                 <div class="TD logon">
