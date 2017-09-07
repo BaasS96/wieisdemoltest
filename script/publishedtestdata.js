@@ -139,14 +139,10 @@ function newContestant(cId, cName, cPin) {
     document.getElementById("dataTable").appendChild(newContestant);
 }
 
-function updateProgress(uId, uProg, uRes) {
-    let progDiv = uId + "progress";
-    let resDiv = uId + "result";
-    document.getElementById(progDiv).innerHTML = uProg;
-    document.getElementById(resDiv).innerHTML = uRes;
-}
-
-function updateEnd(uId, uProg, uRes, uTime) {
+function updateProgress(uId, uProg, uRes, uTime) {
+    if (uTime === "null") {
+        uTime = "-";
+    }
     let progDiv = uId + "progress";
     let resDiv = uId + "result";
     let timeDiv = uId + "time";
@@ -178,9 +174,7 @@ function initConnection() {
             //When someone starts a test or finished a question, a progressupdate
             //will be sent to the server. This update contains a type (progressupdate),
             //and updates data for progress and result and of course the ID of the user.
-            updateProgress(responseData.id, responseData.progress, responseData.result);
-        } else if (responseData.type === "progressend") {
-            updateEnd(responseData.id, responseData.progress, responseData.result, responseData.time);
+            updateProgress(responseData.id, responseData.progress, responseData.result, responseData.time);
         } else if (responseData.type === "progressgroup") {
             updateGroup(responseData.id, responseData.result, responsedata.time)
         }
