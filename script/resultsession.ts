@@ -54,6 +54,7 @@ function initiateConnection() {
     wss.onmessage = function(event) {
         if (mode == Modes.CLIENT) {
             processMessageClient(event.data);
+        } else {
         }
     };
     wss.onclose = function(event) {
@@ -73,7 +74,12 @@ function processMessageClient(msg : string = "{}") {
 }
 
 function getResult() {
-    
+    let n = document.getElementById("name").value;
+    let o = {
+        type: "resultreq",
+        name: n
+    };
+    wss.send(JSON.stringify(o));
 }
 
 function sendInput() {

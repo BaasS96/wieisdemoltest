@@ -1,5 +1,7 @@
 var ws;
 var testStarted = false;
+var nm;
+var testStartedTime;
 window.onload = function() {
     console.log(getLocalIP());
 }
@@ -28,6 +30,8 @@ function initializeTest() {
         .then(function(txt) {
             if (txt === "OK") {
                 //Authorized
+                nm = name;
+                testStartedTime = new Date().getTime();
                 initConnection();
                 startTest();
             } else {
@@ -39,6 +43,8 @@ function initializeTest() {
 
 function startTest() {
     testStarted = true;
+    document.getElementById("pin").value = "";
+    document.getElementById("name").value = "";
     let logonDiv = document.getElementById("LOGON");
     let questionaDiv = document.getElementById("QUESTIONA");
     let questionbDiv = document.getElementById("QUESTIONB");
@@ -52,14 +58,13 @@ function startTest() {
         questionaDiv.style.opacity = "1.0";
         questionbDiv.style.opacity = "1.0";
     }, 1100);
-    requestStart();
 }
 
 function loadQuestion(question, answers) {
     var questionTitle = question.title;
     var questionIndex = question.index;
-    var questionQuestion = question.index + ". &nbsp; " + question.title;
-    var questionAnswers;
+    var questionQuestion = (question.index + 1) + ". &nbsp; " + question.title;
+    var questionAnswers = "";
     for (var i = 0; i < answers.length; i++) {
         questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
     }
@@ -70,6 +75,12 @@ function loadQuestion(question, answers) {
     document.getElementById("QAnswers").innerHTML = questionAnswers;
 }
 
+function loadLastQuestion(question, answers) {
+    document.getElementById("QQuestion").innerHTML = question.title;
+    let questionanswer = "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\";\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
+    document.getElementById("QAnswers").innerHTML = questionanswer;
+}
+ 
 function buttonClicked(questionIndex) {
     let objectToSend = { type: "answer", index: questionIndex };
     ws.send(JSON.stringify(objectToSend));
@@ -82,12 +93,16 @@ function initConnection() {
     var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5890";
     ws = new WebSocket(url);
     ws.onopen = function(event) {
-
+        requestStart();
     };
     ws.onmessage = function(event) {
         let responseData = JSON.parse(event.data);
         if (responseData.type === "question") {
-            loadQuestion(responseData.data, responseData.answers);
+            if (responseData.lastquestion) {
+                loadLastQuestion(responseData.data, responseData.answers);
+            } else {
+                loadQuestion(responseData.data, responseData.answers);
+            }
         } else {
             //Dosomethingandmakemehappy:)
         }
@@ -98,6 +113,46 @@ function initConnection() {
     ws.onerror = function(event) {
         //Display an error. @BaasS
     };
+}
+
+function requestStart() {
+    let o = {
+        type: "starttest",
+        name: nm
+    };
+    ws.send(JSON.stringify(o));
+}
+
+function endTest() {
+    //Send the closing frame
+    let now = new Date().getTime();
+    let testSeconds = now - testStartedTime;
+    let o = {
+        type: "testend",
+        time: testSeconds
+    };
+    ws.send(JSON.stringify(o));
+    //Close the connection
+    ws.close();
+    //Reset the instance
+    testStarted = false;
+    testStartedTime = undefined;
+    nm = undefined;
+    ws = undefined;
+    //Go back to login screen
+    let logonDiv = document.getElementById("LOGON");
+    let questionaDiv = document.getElementById("QUESTIONA");
+    let questionbDiv = document.getElementById("QUESTIONB");
+    questionaDiv.style.opacity = "0.0";
+    questionbDiv.style.opacity = "0.0";
+    setTimeout(function() {
+        logonDiv.style.display = "block";
+        questionaDiv.style.display = "none";
+        questionbDiv.style.display = "none";
+    }, 1000);
+    setTimeout(function() {
+        logonDiv.style.opacity = "1.0";
+    }, 1100);
 }
 //--------------------
 //OLD TEST SYSTEM
