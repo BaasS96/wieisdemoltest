@@ -6,6 +6,7 @@
     font-family: 'Roboto';
     src: url(Roboto-Regular.ttf);
 }
+
 #body {
     background-color: #212121;
     font-family: 'Roboto', sans-serif;
@@ -16,24 +17,45 @@
     margin: 0px;
     overflow: hidden;
 }
+
 .pubtestnameholder {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
 .TB {
     display: table;
     width: 100%;
 }
+
 .TR {
     display: table-row;
     transition: background-color .2s ease;
 }
+
 .TR:hover {
     background-color: #303030;
 }
+
 .TD {
     display: table-cell;
 }
+
 .head {
     background-color: #303030;
+}
+
+.Group {
+    background-color: #383838;
+    transition: background-color .2s ease;
+}
+
+.Group:hover {
+    background-color: #2d5867;
+}
+
+#sessionButton {
+    display: block;
+    float: right;
+    margin-right: 1em;
 }
