@@ -35,7 +35,7 @@ html {
 }
 
 #questionholder {
-    width: 60%;
+    width: 75%;
     height: 100%;
     overflow-y: auto;
     display: block;
@@ -50,7 +50,7 @@ html {
 
 .holderright {
     display: inline-block;
-    width: 40%;
+    width: 25%;
     height: 100%;
     background-color: #323232;
 }
@@ -257,6 +257,20 @@ input:focus {
 
 .save_icon:hover {
     background-image: url(../images/save_white_96x96.png);
+}
+
+.publish_icon {
+    background-color: transparent;
+    border: none;
+    width: 1.7em;
+    height: 1.7em;
+    outline: none;
+    background-size: cover;
+    background-image: url(../images/ic_publish_grey_36dp.png);
+}
+
+.publish_icon:hover {
+    background-image: url(../images/ic_publish_white_36dp.png);
 }
 
 .back_icon {
