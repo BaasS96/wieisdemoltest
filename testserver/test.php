@@ -51,5 +51,15 @@
             $url = "../data/" . $this->name . "/" . $this->name . "_results";
             return $url;
         }
+
+        function getNumberOfQuestions() {
+            return $this->numberofquestions - 1;
+        }
+
+        function calculateProgressPercentile($index) {
+            $d100 = $this->getNumberOfQuestions() / 100;
+            $percentile = ceil($index / $d100);
+            return $percentile;
+        }
     }
 ?>
