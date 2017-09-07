@@ -139,6 +139,22 @@ function newContestant(cId, cName, cPin) {
     document.getElementById("dataTable").appendChild(newContestant);
 }
 
+function updateProgress(uId, uProg, uRes) {
+    let progDiv = uId + "progress";
+    let resDiv = uId + "result";
+    document.getElementById(progDiv).innerHTML = uProg;
+    document.getElementById(resDiv).innerHTML = uRes;
+}
+
+function updateEnd(uId, uProg, uRes, uTime) {
+    let progDiv = uId + "progress";
+    let resDiv = uId + "result";
+    let timeDiv = uId + "time";
+    document.getElementById(progDiv).innerHTML = uProg;
+    document.getElementById(resDiv).innerHTML = uRes;
+    document.getElementById(timeDiv).innerHTML = uTime;
+}
+
 //SECTION -- WEBSOCKET CONNECTIONS
 // THIS Handles connection to the server that handles progress, answer checking reporting to supervisors etc...
 
@@ -156,8 +172,8 @@ function initConnection() {
             //will be sent to the server. This update contains a type (progressupdate),
             //and updates data for progress and result and of course the ID of the user.
             updateProgress(responseData.id, responseData.progress, responseData.result);
-        } else {
-            //Dosomethingandmakemehappy:)
+        } else if (responseData.type === "progressend") {
+            updateEnd(responseData.id, responseData.progress, responseData.result, responseData.time);
         }
     };
     ws.onclose = function(event) {
