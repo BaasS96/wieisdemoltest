@@ -1,12 +1,12 @@
 window.onload = function() {
     listFiles();
-    let panel = createMainPanel("contestants");
-    panel.setAttribute("type", "contestants");
-    let holder = document.getElementById("holderright");
-    holder.appendChild(panel);
-    panel = createMainPanel("publishinfo");
-    panel.setAttribute("type", "publishinfo");
-    holder.appendChild(panel)
+    //let panel = createMainPanel("contestants");
+    //panel.setAttribute("type", "contestants");
+    //let holder = document.getElementById("holderright");
+    //holder.appendChild(panel);
+    //panel = createMainPanel("publishinfo");
+    //panel.setAttribute("type", "publishinfo");
+    //holder.appendChild(panel)
 };
 //Temp debug JS Output
 function writeJsDebug(input) {
@@ -82,7 +82,7 @@ function addanswer(parentId, answer, correct) {
     emptyanswer.className = "answerholder";
     aid = emptyanswer.id;
     emptyanswer.title = aid;
-    if (typeof answer === undefined) {
+    if (typeof answer === undefined && answer === undefined) {
         emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
         document.getElementById(parentId + "_holder").appendChild(emptyanswer);
     } else {
@@ -122,7 +122,7 @@ function togglequestion(qId) {
 function showall(el) {
     var children = document.getElementById("questionholder").childNodes;
     var i;
-    for (i = 1; i < (children.length); i++) {
+    for (i = 0; i < (children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
         if (questionToggleStatus === "none") {
             var qId = children[i].id;
@@ -136,7 +136,7 @@ function showall(el) {
 function hideall(el) {
     var children = document.getElementById("questionholder").childNodes;
     var i;
-    for (i = 1; i < (children.length); i++) {
+    for (i = 0; i < (children.length); i++) {
         var questionToggleStatus = document.getElementById(children[i].id + "_holder").style.display;
         if (questionToggleStatus !== "none") {
             var qId = children[i].id;
@@ -251,7 +251,7 @@ function initContestantEditor() {
 function publishTest() {
     let data = new FormData();
     data.set("test", currenttest);
-    data.set("revision",rev);
+    data.set("revision", rev);
     fetch("publishtest.php", {
         method: "POST",
         body: data
@@ -264,4 +264,4 @@ function publishTest() {
     }).then(function(json) {
         //Receive codes here
     });
-} 
+}

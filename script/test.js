@@ -3,7 +3,7 @@ var testStarted = false;
 var nm;
 var testStartedTime;
 window.onload = function() {
-    console.log(getLocalIP());
+
 }
 window.onkeypress = function(event) {
     if (!testStarted) {
@@ -16,6 +16,9 @@ window.onkeypress = function(event) {
 function initTest() {
     //Disable right-clicking
     document.addEventListener('contextmenu', event => event.preventDefault());
+    setTimeout(function() {
+        document.body.mozRequestFullScreen();
+    }, 1000);
 }
 
 function initializeTest() {
@@ -80,7 +83,7 @@ function loadLastQuestion(question, answers) {
     let questionanswer = "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\";\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
     document.getElementById("QAnswers").innerHTML = questionanswer;
 }
- 
+
 function buttonClicked(questionIndex) {
     let objectToSend = { type: "answer", index: questionIndex };
     ws.send(JSON.stringify(objectToSend));
