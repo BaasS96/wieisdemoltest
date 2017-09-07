@@ -10,6 +10,7 @@
             $this->revision = $r;
             $this->questions = $q;
             $this->numberofquestions = count($q);
+            var_dump($q);
         }
 
         function getQuestionAtIndex($index) {

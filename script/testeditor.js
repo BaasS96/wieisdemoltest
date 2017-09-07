@@ -82,7 +82,7 @@ function addanswer(parentId, answer, correct) {
     emptyanswer.className = "answerholder";
     aid = emptyanswer.id;
     emptyanswer.title = aid;
-    if (typeof answer === undefined && answer === undefined) {
+    if (typeof answer === "undefined") {
         emptyanswer.innerHTML = '<button type="button" class="delete_icon" title="Remove answer" onclick="removeanswer(this);">&nbsp;</button><input type="checkbox" class="correctanswer" id="chb_' + aid + '" /><label class="chb_label" title="Answer is right" for="chb_' + aid + '"></label><input type="text" placeholder="Answer" id="input_answer_' + aid + '">';
         document.getElementById(parentId + "_holder").appendChild(emptyanswer);
     } else {

@@ -167,6 +167,7 @@ function initConnection() {
     ws.onopen = function(event) {
         connectionOpenStatus = true;
         document.getElementById("sessionButton").innerHTML = "End session";
+        ws.send(JSON.stringify({"type": "sessionstart"}));
     };
     ws.onmessage = function(event) {
         let responseData = JSON.parse(event.data);

@@ -23,7 +23,10 @@
         }
 
         function resolveContestantInfo() {
-            $data = file_get_contents("../data/contestants.json");
+            $file = dirname(__FILE__);
+            $file = dirname($file);
+            $file = $file . "\data\contestants.json";
+            $data = file_get_contents($file);
             $data = json_decode($data);
             foreach ($data as $key => $value) {
                 foreach($value as $key_ => $value_) {

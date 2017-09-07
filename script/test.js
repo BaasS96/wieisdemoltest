@@ -17,7 +17,7 @@ function initTest() {
     //Disable right-clicking
     document.addEventListener('contextmenu', event => event.preventDefault());
     setTimeout(function() {
-        document.body.mozRequestFullScreen();
+        //document.body.mozRequestFullScreen();
     }, 1000);
 }
 

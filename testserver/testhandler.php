@@ -31,7 +31,7 @@
                 $this->instances[$us]->score++;
             }
             $this->sendNextQuestion($user);
-            $this->statusUpdate($user);
+            $this->statusUpdate($us);
             $this->calculateScore();
         }
 
@@ -39,7 +39,7 @@
             $us = $user->id;
             $this->instances[$us]->ended = true;
             $this->instances[$us]->time = $time;
-            $this->statusUpdate($user);
+            $this->statusUpdate($us);
             $this->calculateTimeScore();
         }
 
@@ -149,14 +149,17 @@
         }
 
         function loadCurrentTest() {
-            if (file_exists("../data/defaulttest.json")) {
-                $f = file_get_contents("../data/defaulttest.json");
+            $file = dirname(__FILE__);
+            $file = dirname($file);
+            $file = $file . "\data\defaulttest.json";
+            if (file_exists($file)) {
+                $f = file_get_contents($file);
                 $f = json_decode($f);
                 $rev = $f->revision;
                 $rev = str_replace(".", "_", $rev);
                 $rev = str_replace("-", "_", $rev);
                 $rev = str_replace(":", "_", $rev);
-                $ff = "../data/" . $f->name . "/" . $f->name . "-" . $rev . ".json";
+                $ff = str_replace("defaulttest.json", $f->name . "\\" . $f->name . "-" . $rev . ".json", $file);
                 if (file_exists($ff)) {
                     $t = json_decode(file_get_contents($ff));
                     $this->test = new Test($f->name, $rev, $t);
