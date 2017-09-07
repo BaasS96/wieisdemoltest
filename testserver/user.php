@@ -4,11 +4,12 @@
         public $name;
         public $group;
         public $id;
+        public $powers;
         public $atquestionindex = -1;
         protected $socket;
         public $score = 0;
         public $ended = false;
-        public $time = 0;
+        public $time = NULL;
 
         function __construct($socket, $nm) {
             $this->socket = $socket;
