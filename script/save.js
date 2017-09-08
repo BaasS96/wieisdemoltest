@@ -1,7 +1,9 @@
 function saveData() {
     var questions = [];
-    var children = document.getElementById("questionholder").childNodes;
-    for (i = 0; i < children.length; i++) {
+    var children = document.querySelectorAll("#questionholder div.questionholder");
+    let len = children.length;
+    console.log(children.length);
+    for (i = 0; i < len; i++) {
         var questionTitle = document.getElementById("input_title_q" + i).value;
         var object = {
             "id": i,

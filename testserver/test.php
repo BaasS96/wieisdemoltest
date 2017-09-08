@@ -49,8 +49,10 @@
         }
 
         function resolveResultsDirURL() {
-            $url = "../data/" . $this->name . "/" . $this->name . "_results";
-            return $url;
+            $file = dirname(__FILE__);
+            $file = dirname($file);
+            $file = $file . "\data\\" . $this->name . "\\" . $this->name . "_results";
+            return $file;
         }
 
         function getNumberOfQuestions() {
