@@ -7,7 +7,13 @@ window.onload = function() {
 }
 
 function toFullScreen() {
-    document.body.mozRequestFullScreen();
+    if (document.body.mozRequestFullScreen) {
+        document.body.mozRequestFullScreen();
+    } else if (document.body.webkitRequestFullScreen) {
+        document.body.webkitRequestFullscreen();
+    } else {
+        document.body.requestFullscreen();
+    }
     document.getElementById("bttnFullscreen").style.display = "none";
 }
 
