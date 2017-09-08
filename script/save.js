@@ -37,6 +37,8 @@ function sendData(data) {
     timestring += save.getMonth() + "_";
     timestring += save.getFullYear() + "_";
     timestring += save.getHours() + "_" + save.getMinutes() + "_" + save.getSeconds();
+    currenttest = name;
+    rev = timestring;
     fetch("savefile.php?name=" + name + "&save=" + timestring + "&data=" + data)
         .then(function(res) {
             if (res.ok) {
