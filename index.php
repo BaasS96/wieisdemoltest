@@ -4,6 +4,7 @@
         <title>
             Wie Is De Mol
         </title>
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png">
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <!--<script src="script/load.js"></script>!-->
         <script src="script/test.js"></script>

@@ -23,7 +23,7 @@
     width: 100%;
     position: fixed;
     z-index: -5;
-    margin-left: 3em;
+    margin-left: -0.5em;
 }
 
 .widm-logo-blur {
