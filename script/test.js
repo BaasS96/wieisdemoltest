@@ -85,13 +85,17 @@ function startTest() {
     }, 1100);
 }
 
-function loadQuestion(question, answers) {
+function loadQuestion(question, answers, lastquestion) {
     var questionTitle = question.title;
     var questionIndex = question.index;
     var questionQuestion = (question.index + 1) + ". &nbsp; " + question.title;
     var questionAnswers = "";
-    for (var i = 0; i < answers.length; i++) {
-        questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
+    if (lastquestion) {
+        questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
+    } else {
+        for (var i = 0; i < answers.length; i++) {
+            questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
+        }
     }
     if (answers.length > 4) {
         document.getElementById("QAnswers").style.columns = "2";
@@ -131,11 +135,7 @@ function initConnection() {
     ws.onmessage = function(event) {
         let responseData = JSON.parse(event.data);
         if (responseData.type === "question") {
-            if (responseData.lastquestion) {
-                loadLastQuestion(responseData.data, responseData.answers);
-            } else {
-                loadQuestion(responseData.data, responseData.answers);
-            }
+            loadQuestion(responseData.data, responseData.answers, responseData.lastquestion);
         } else {
             //Dosomethingandmakemehappy:)
         }

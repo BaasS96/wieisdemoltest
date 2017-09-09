@@ -25,7 +25,8 @@
         function resolveContestantInfo() {
             $file = dirname(__FILE__);
             $file = dirname($file);
-            $file = $file . "\data\test_contestants.json";
+            $file = $file . "\data\\";
+            $file .= "test_contestants.json";
             $data = file_get_contents($file);
             $data = json_decode($data);
             foreach ($data as $key => $value) {

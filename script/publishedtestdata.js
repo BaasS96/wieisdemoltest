@@ -21,6 +21,7 @@ function startSession() {
 
 function endSession() {
     document.getElementById("sessionButton").innerHTML = "Start session";
+    ws.send(JSON.stringify({ "type": "sessionend" }));
 }
 
 function getPublishedTest() {
@@ -130,32 +131,73 @@ function newContestant(cId, cName, cPin) {
     newContestant.appendChild(newContestantHolder5);
     let newContestantHolder6 = document.createElement("div");
     newContestantHolder6.className = "TD";
-    newContestantHolder6.innerHTML = "<input type='checkbox' id='cIdJ' onchange=\"updateContestant(self);\"></input>";
+    newContestantHolder6.innerHTML = "<input type='checkbox' id='cIdJ' onchange=\"updateContestant(this, " + cId + ", 'joker');\"></input>";
     newContestant.appendChild(newContestantHolder6);
     let newContestantHolder7 = document.createElement("div");
     newContestantHolder7.className = "TD";
-    newContestantHolder7.innerHTML = "<input type='checkbox' id='cIdV' onchange=\"updateContestant(self);\"></input>";;
+    newContestantHolder7.innerHTML = "<input type='checkbox' id='cIdV' onchange=\"updateContestant(this, " + cId + ", 'exemption');\"></input>";;
     newContestant.appendChild(newContestantHolder7);
     document.getElementById("dataTable").appendChild(newContestant);
 }
 
-function updateProgress(uId, uProg, uRes, uTime) {
+function updateProgress(uId, uProg, uRes, uTime, uIndex) {
     if (uTime === "null") {
         uTime = "-";
     }
     let progDiv = uId + "progress";
     let resDiv = uId + "result";
     let timeDiv = uId + "time";
-    document.getElementById(progDiv).innerHTML = uProg;
+    let prog = document.getElementById(progDiv);
+    prog.innerHTML = uProg + "%";
+    prog.title = "At question " + uIndex;
     document.getElementById(resDiv).innerHTML = uRes;
-    document.getElementById(timeDiv).innerHTML = uTime;
+    document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
 }
 
-function updateGroup(gId, gRes, gTime) {
-    let resDiv = gId + "result";
-    let timeDiv = gId + "time";
-    document.getElementById(resDiv).innerHTML = gRes;
-    document.getElementById(timeDiv).innerHTML = gTime;
+function updateGroup(gScores) {
+    if (gScores.constructor === Array) {
+        for (var i = 0; i < gScores.length; i++) {
+            let obj = gScores[i];
+            let gId = Object.keys(obj)[0];
+            let gRes = obj[gId].score;
+            let gTime = obj[gId].time;
+            let resDiv = gId + "result";
+            let timeDiv = gId + "time";
+            document.getElementById(resDiv).innerHTML = gRes;
+            document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
+        }
+    } else {
+        let gId = Object.keys(gScores)[0];
+        let gRes = gScores[gId].score;
+        let gTime = gScores[gId].time;
+        let resDiv = gId + "result";
+        let timeDiv = gId + "time";
+        document.getElementById(resDiv).innerHTML = gRes;
+        document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
+    }
+}
+
+function updateContestant(element, id, power) {
+    let o = {
+        "type": "specialpower",
+        "remove": !element.checked,
+        "user": id,
+        "power": power
+    };
+    ws.send(JSON.stringify(o));
+}
+
+function millisecondsToTimeString(duration) {
+    var milliseconds = parseInt((duration % 1000) / 100),
+        seconds = parseInt((duration / 1000) % 60),
+        minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 
 //SECTION -- WEBSOCKET CONNECTIONS
@@ -167,7 +209,7 @@ function initConnection() {
     ws.onopen = function(event) {
         connectionOpenStatus = true;
         document.getElementById("sessionButton").innerHTML = "End session";
-        ws.send(JSON.stringify({"type": "sessionstart"}));
+        ws.send(JSON.stringify({ "type": "sessionstart" }));
     };
     ws.onmessage = function(event) {
         let responseData = JSON.parse(event.data);
@@ -175,9 +217,12 @@ function initConnection() {
             //When someone starts a test or finished a question, a progressupdate
             //will be sent to the server. This update contains a type (progressupdate),
             //and updates data for progress and result and of course the ID of the user.
-            updateProgress(responseData.id, responseData.progress, responseData.result, responseData.time);
-        } else if (responseData.type === "progressgroup") {
-            updateGroup(responseData.id, responseData.result, responsedata.time)
+            updateProgress(responseData.id, responseData.progress, responseData.result, responseData.time, responseData.index);
+        } else if (responseData.type === "scoreupdate") {
+            updateGroup(responseData.scores);
+        } else if (responseData.type === "saved") {
+            ws.close();
+            alert("Results succesfully saved!");
         }
     };
     ws.onclose = function(event) {
