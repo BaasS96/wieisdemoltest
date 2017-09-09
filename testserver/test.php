@@ -64,5 +64,13 @@
             $percentile = ceil($index / $d100);
             return $percentile;
         }
+
+        function getTestName() {
+            return $this->name;
+        }
+
+        function getTestRevision() {
+            return $this->revision;
+        }
     }
 ?>

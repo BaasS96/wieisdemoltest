@@ -1,0 +1,2 @@
+php resultserver/resultserver.php
+PAUSE

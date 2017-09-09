@@ -22,6 +22,7 @@
         }
 
         private function processMessage($rawjson) {
+            $results = $this->results;
             $json = json_decode($rawjson);
             if ($json->type == "letter") {
                 $this->_send($rawjson);
@@ -54,7 +55,9 @@
             $file = $basefile . "\data\defaulttest.json";
             if (file_exists($file)) {
                 $test = json_decode(file_get_contents($file));
-                $resultsfile = $basefile . "\data\\" . $test->name . "\\" . $test->name . "_results\results.json";
+                $resultsfile = $basefile . "\data\\" . $test->name . "\\" . $test->name;
+                $resultsfile .= "_results";
+                $resultsfile .= DIRECTORY_SEPARATOR . "results.json";
                 if (file_exists($resultsfile)) {
                     $this->results = json_decode(file_get_contents($resultsfile));
                 }

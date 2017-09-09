@@ -64,7 +64,8 @@
         }
 
         function removeFromManagerList($u) {
-            array_splice($this->managers, $u);
+            $index = array_search($u, $this->managers);
+            array_splice($this->managers, $index, $index);
         }
 
         function installPower($power, $user) {
@@ -181,24 +182,23 @@
             $lowestscore = 0;
             $lowesttime = 0;
             $loser = NULL;
-            foreach ($results as $value) {
-                foreach($value as $key => $value_) {
-                    if ($lowestscore == 0) {
-                        $lowestscore = $value_->score;
-                        $lowesttime = $value_->time;
-                        $loser = $key;
-                        continue;
-                    }
-                    if ($value_->score < $lowestscore && $value_->time > $lowesttime) {
-                        $lowestscore = $value_->score;
-                        $lowesttime = $value_->time;
-                        $loser = $key;
-                    }
+            foreach ($results as $key => $value) {
+                var_dump($value);
+                if ($lowestscore == 0) {
+                    $lowestscore = $value["score"];
+                    $lowesttime = $value["time"];
+                    $loser = $key;
+                    continue;
+                }
+                if ($value["score"] < $lowestscore && $value["time"] > $lowesttime) {
+                    $lowestscore = $value["score"];
+                    $lowesttime = $value["time"];
+                    $loser = $key;
                 }
             }
             $o = [
-                "test" => $this->test->name,
-                "revision" => $this->test->revision,
+                "test" => $this->test->getTestName(),
+                "revision" => $this->test->getTestRevision(),
                 "loser" => $loser,
                 "scores" => $results
             ];

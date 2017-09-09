@@ -14,7 +14,7 @@ window.onload = () => {
 window.onkeyup = (event) => {
     if (event.keyCode === 13) {
         if (viewingresult) {
-            selectMode(Modes[mode]);
+            selectMode(Modes[mode], true);
         } else {
             getResult();
         }
@@ -31,7 +31,7 @@ function toFullScreen() {
     }
 }
 
-function selectMode(m : string) {
+function selectMode(m : string, init : boolean = false) {
     toFullScreen();
     document.body.style.backgroundColor = "#000000";
     mode = <Modes>Modes[m];
@@ -70,7 +70,7 @@ function selectMode(m : string) {
     holder_.appendChild(uberholder);
     document.body.appendChild(holder_);
     document.getElementById("name").addEventListener("keyup", function() {sendInput();});
-    initiateConnection();
+    if (init) initiateConnection();
 }
 
 function preloadImages() {
