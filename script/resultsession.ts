@@ -1,11 +1,39 @@
 var mode : Modes;
 var wss : WebSocket;
+var greenblob, redblob;
+var viewingresult = false;
 enum Modes {
     CLIENT,
     SERVER
 }
 
+window.onload = () => {
+    preloadImages();
+};
+
+window.onkeyup = (event) => {
+    if (event.keyCode === 13) {
+        if (viewingresult) {
+            selectMode(Modes[mode]);
+        } else {
+            getResult();
+        }
+    }
+};
+
+function toFullScreen() {
+    if (document.body.mozRequestFullScreen) {
+        document.body.mozRequestFullScreen();
+    } else if (document.body.webkitRequestFullScreen) {
+        document.body.webkitRequestFullscreen();
+    } else {
+        document.body.requestFullscreen();
+    }
+}
+
 function selectMode(m : string) {
+    toFullScreen();
+    document.body.style.backgroundColor = "#000000";
     mode = <Modes>Modes[m];
     document.body.innerHTML = "";
     document.body.id = "body";
@@ -45,6 +73,27 @@ function selectMode(m : string) {
     initiateConnection();
 }
 
+function preloadImages() {
+    fetch("images/groenscherm.png")
+    .then(function(res) {
+        if (res.ok) {
+            return res.blob();
+        }
+    })
+    .then(function(blob) {
+        greenblob = URL.createObjectURL(blob);
+    });
+    fetch("images/roodscherm.png")
+    .then(function(res) {
+        if (res.ok) {
+            return res.blob();
+        }
+    })
+    .then(function(blob) {
+        redblob = URL.createObjectURL(blob);
+    });
+}
+
 function initiateConnection() {
     var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5891";
     wss = new WebSocket(url);
@@ -55,6 +104,7 @@ function initiateConnection() {
         if (mode == Modes.CLIENT) {
             processMessageClient(event.data);
         } else {
+            processMessageServer(event.data);
         }
     };
     wss.onclose = function(event) {
@@ -70,6 +120,31 @@ function processMessageClient(msg : string = "{}") {
     let json = JSON.parse(msg);
     if (json.type === "letter") {
         document.getElementById("name").value = json.letter;
+    } else if (json.type == "result") {
+        let img = new Image();
+        img.className = "resultimg";
+        img.src = json.result === "green" ? greenblob : redblob;
+        document.body.style.backgroundColor = "white";
+        document.body.innerHTML = "";
+        document.body.appendChild(img);
+        img.addEventListener("click", () => {
+            selectMode(Modes[mode]);
+        });
+    }
+}
+
+function processMessageServer(msg : string = "{}") {
+    let json = JSON.parse(msg);
+    if (json.type == "result") {
+        let img = new Image();
+        img.className = "resultimg";
+        img.src = json.result === "green" ? greenblob : redblob;
+        document.body.style.backgroundColor = "white";
+        document.body.innerHTML = "";
+        document.body.appendChild(img);
+        img.addEventListener("click", () => {
+            selectMode(Modes[mode]);
+        });
     }
 }
 
