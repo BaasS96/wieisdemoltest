@@ -62,16 +62,27 @@ function saveContestants() {
         }
         groups.push(o);
     } else {
-        for (var i = 0; i < currentid;) {
-            let title = document.getElementById("titleholder_c" + i).innerHTML;
-            var o = {};
-            o[title] = [];
-            let gholder = document.getElementById("c" + i);
-            for (var l = 2; l < gholder.childNodes.length; l++) {
-                let nm = gholder.childNodes[l].lastChild.value;
-                o[title].push(nm);
+        try {
+            for (i = 0; i <= currentid; i++) {
+                var title = document.getElementById("titleholder_c" + i).innerHTML;
+                var o = {};
+                o[title] = [];
+                var l = document.getElementById("c" + i).getAttribute("contestants");
+                l = parseInt(l);
+                if (l > 0) {
+                    for (m = 0; m <= l; m++) {
+                        console.log(i + "    " + m);
+                        let nm = document.getElementById("c" + i + "e" + m).value;
+                        o[title].push(nm);
+                    }
+                } else {
+                    let nm = document.getElementById("c" + i + "e0").value;
+                    o[title].push(nm);
+                }
+                groups.push(o);
             }
-            groups.push(o);
+        } catch (error) {
+            console.log(error);
         }
     }
     sendContestantData(JSON.stringify(groups));

@@ -1,3 +1,5 @@
+var file, revision;
+
 function listFiles() {
     fetch("listtests.php")
         .then(function(res) {
@@ -70,7 +72,6 @@ function loadData(file, tname) {
 }
 
 function getData(event) {
-    var file, revision;
     if (typeof this.getAttribute === "function") {
         file = this.getAttribute('test');
         revision = this.getAttribute('revision');
@@ -98,7 +99,7 @@ function getData(event) {
 
 function listContestants() {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "data/contestants.json");
+    xhr.open("GET", "data/contestants.json?" + new Date().getTime());
     xhr.addEventListener("load", function() {
         if (this.responseText === "") {
             return;
@@ -134,7 +135,7 @@ function createMainPanel(type) {
     } else if (type === "publishinfo") {
         html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Publication info";
     } else {
-        html = "<button type='button' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Contestants";
+        html = "<button type='button' id='contestantpanel' class='showall_icon' title='Show contents' onclick='expandPanel(this);'>&nbsp;</button> <span class='rightpanel_header_text'>Contestants";
     }
     html += "</span>";
     header.innerHTML = html;

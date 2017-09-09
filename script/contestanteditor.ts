@@ -42,7 +42,7 @@ function addgroup(name? : string) {
     let buttonadd = document.createElement("button");
     buttonadd.className = "add_icon";
     buttonadd.title = "Add answer";
-    buttonadd.onclick = addContestant.bind(holder2);
+    buttonadd.onclick = addContestant.bind(questionholder);
     let input = document.createElement("input");
     input.id = "input_title_" + overallid;
     input.placeholder = "Set title";
@@ -59,11 +59,10 @@ function addgroup(name? : string) {
     return questionholder;
 }
 
-function addContestant(name_? : string) {
-    let t = this.parentNode.parentNode;
+function addContestant(name_? : string) {;
     let cholder = document.createElement("div");
-    var cid = parseInt(t.getAttribute("contestants")) + 1;
-    t.setAttribute("contestants", cid);
+    var cid = parseInt(this.getAttribute("contestants")) + 1;
+    this.setAttribute("contestants", cid);
     cholder.className = "answerholder";
     cholder.title = "Contestant";
     let buttondel = document.createElement("button");
@@ -75,6 +74,9 @@ function addContestant(name_? : string) {
     name.type = "text";
     if (typeof name_ === "string") {
         name.value = name_;
+        name.id = "c" + currentid + "e" + cid;
+    } else {
+        name.id = "c" + this.id.substring(1) + "e" + cid;
     }
     addChildren(cholder, buttondel, name);
     this.appendChild(cholder);
@@ -83,6 +85,10 @@ function addContestant(name_? : string) {
 function removeContestant() {
     let c = confirm("Are you sure that you want to remove this contestant?");
     if (c) {
+        let val = this.parentNode.getAttribute("contestants");
+        val = parseInt(val);
+        val -= 1;
+        this.parentNode.setAttribute("contestants", val);
         this.outerHTML = "";
         delete this;
     }
@@ -109,5 +115,6 @@ function removeGroup() {
     if (c) {
         this.outerHTML = "";
         delete this;
+        currentid--;
     }
 }

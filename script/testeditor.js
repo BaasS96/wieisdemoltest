@@ -221,6 +221,7 @@ function cleareditor() {
 }
 
 function backtoeditor() {
+    currentid = -1;
     saveContestants();
     cleareditor();
     let add = document.getElementById("add");
@@ -231,12 +232,12 @@ function backtoeditor() {
     save.className = "save_icon";
     save.onclick = saveData;
     let qwolder = document.getElementById('questionholder');
-    document.getElementById("questionholder").innerHTML = sessionStorage.getItem("lasteditedtest");
+    collapsePanel(document.getElementById("contestantpanel"));
+    loadLastEditedTest();
 }
 
 function initContestantEditor() {
-    let html = document.getElementById('questionholder').innerHTML
-    sessionStorage.lasteditedtest = html;
+    saveTest();
     cleareditor();
     let add = document.getElementById("add");
     add.title = "Add group";
@@ -246,4 +247,31 @@ function initContestantEditor() {
     save.className = "back_icon";
     save.onclick = backtoeditor;
     listContestants();
+}
+
+function saveTest() {
+    localStorage.setItem("lasteditedtest", file);
+    localStorage.setItem("lasteditedtest_rev", revision);
+}
+
+class EditorData {
+    constructor(f, r) {
+        this.file = r;
+        this.revision = r;
+    }
+
+    getAttribute(key) {
+        if (key === "file") {
+            return this.file;
+        } else if (key === "revision") {
+            return this.revision;
+        }
+    }
+}
+
+function loadLastEditedTest() {
+    let f = localStorage.getItem("lasteditedtest");
+    let r = localStorage.getItem("lasteditedtest_rev");
+    let o = new EditorData(f, r);
+    getData(o);
 }
