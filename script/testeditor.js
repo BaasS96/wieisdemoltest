@@ -249,6 +249,7 @@ function initContestantEditor() {
 }
 
 function publishTest() {
+    saveData();
     let data = new FormData();
     data.set("test", currenttest);
     data.set("revision", rev);

@@ -38,7 +38,7 @@ function getPublishedTest() {
 }
 
 function getContestants() {
-    fetch("data/contestants.json")
+    fetch("data/test_contestants.json")
         .then(function(res) {
             if (res.ok) {
                 return res.json();

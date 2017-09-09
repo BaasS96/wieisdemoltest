@@ -7,7 +7,13 @@ window.onload = function() {
 }
 
 function toFullScreen() {
-    document.body.mozRequestFullScreen();
+    if (document.body.mozRequestFullScreen) {
+        document.body.mozRequestFullScreen();
+    } else if (document.body.webkitRequestFullScreen) {
+        document.body.webkitRequestFullscreen();
+    } else {
+        document.body.requestFullscreen();
+    }
     document.getElementById("bttnFullscreen").style.display = "none";
 }
 
@@ -100,7 +106,7 @@ function loadQuestion(question, answers) {
 
 function loadLastQuestion(question, answers) {
     document.getElementById("QQuestion").innerHTML = question.title;
-    let questionanswer = "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\";\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
+    let questionanswer = "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
     document.getElementById("QAnswers").innerHTML = questionanswer;
 }
 
