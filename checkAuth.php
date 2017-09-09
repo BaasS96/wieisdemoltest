@@ -2,8 +2,8 @@
     if (isset($_GET['name'], $_GET['pin'])) {
         $name = $_GET['name'];
         $pin = $_GET['pin'];
-        if (file_exists("data/contestants.json")) {
-            $data = file_get_contents("data/contestants.json");
+        if (file_exists("data/test_contestants.json")) {
+            $data = file_get_contents("data/test_contestants.json");
             $data = json_decode($data);
             foreach ($data as $key => $value) {
                 foreach($value as $key_ => $value_) {

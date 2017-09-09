@@ -18,7 +18,7 @@
                     $this->handler->sendNextQuestion($user, $json->name);
                 } else if ($json->type == "answer") {
                     $this->handler->processAnswer($user, $json->index);
-                } else if ($json->type == "endtest") {
+                } else if ($json->type == "testend") {
                     $this->handler->endTest($user, $json->time);
                 } else if ($json->type == "specialpower") {
                     if ($json->remove) {
@@ -26,6 +26,8 @@
                     } else {
                         $this->handler->installPower($json->power, $json->user);
                     }
+                } else if ($json->type == "sessionend") {
+                    $this->handler->save();
                 }
                 } else {
                     if ($json->type == "sessionstart") {
@@ -42,7 +44,9 @@
 
         protected function closed($user) {
             //Save testdata of user include timestamp.
-            $this->handler->finish($user);
+            if (is_bool($this->handler->finish($user))) {
+                $this->handler->removeFromManagerList($user);
+            }
         }
 
         protected function started() {

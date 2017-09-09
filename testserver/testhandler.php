@@ -40,24 +40,31 @@
             $this->instances[$us]->ended = true;
             $this->instances[$us]->time = $time;
             $this->statusUpdate($us);
-            $this->calculateTimeScore();
+            $this->calculateScore();
         }
 
         function finish($user) {
             $us = $user->id;
-            $resultsdir = $this->test->resolveResultsDirURL();
-            if (!is_dir($resultsdir)) {
-                mkdir($resultsdir);
+            if (array_key_exists($us, $this->instances)) {
+                $resultsdir = $this->test->resolveResultsDirURL();
+                if (!is_dir($resultsdir)) {
+                    mkdir($resultsdir);
+                }
+                $data = serialize($this->instances[$us]);
+                $file = $resultsdir . "/" . $this->instances[$us]->name . ".result";
+                file_put_contents($file, $data);
+                //unset($this->instances[$us]);
+                return $data;
             }
-            $data = serialize($this->instances[$us]);
-            $file = $resultsdir . "/" . $this->instances[$us]->name . ".result";
-            file_put_contents($file, $data);
-            //unset($this->instances[$us]);
-            return $data;
+            return false;
         }
 
         function addToManagerList($u) {
             array_push($this->managers, $u);
+        }
+
+        function removeFromManagerList($u) {
+            array_splice($this->managers, $u);
         }
 
         function installPower($power, $user) {
@@ -127,6 +134,7 @@
             ];
             $o = json_encode($o);
             $this->sendToManagers($o);
+            return $averaged;
         }
 
         function statusUpdate($user) {
@@ -166,6 +174,42 @@
                     $this->server->status = 1;
                 }
             }
+        }
+
+        function save() {
+            $results = $this->calculateScore();
+            $lowestscore = 0;
+            $lowesttime = 0;
+            $loser = NULL;
+            foreach ($results as $value) {
+                foreach($value as $key => $value_) {
+                    if ($lowestscore == 0) {
+                        $lowestscore = $value_->score;
+                        $lowesttime = $value_->time;
+                        $loser = $key;
+                        continue;
+                    }
+                    if ($value_->score < $lowestscore && $value_->time > $lowesttime) {
+                        $lowestscore = $value_->score;
+                        $lowesttime = $value_->time;
+                        $loser = $key;
+                    }
+                }
+            }
+            $o = [
+                "test" => $this->test->name,
+                "revision" => $this->test->revision,
+                "loser" => $loser,
+                "scores" => $results
+            ];
+            $resultsdir = $this->test->resolveResultsDirURL();
+            if (!is_dir($resultsdir)) {
+                mkdir($resultsdir);
+            }
+            $json = json_encode($o);
+            $file = $resultsdir . "\\results.json";
+            file_put_contents($file, $json);
+            $this->sendToManagers(json_encode(["type" => "saved"]));
         }
     }
 ?>

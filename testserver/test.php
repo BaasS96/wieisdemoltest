@@ -60,7 +60,7 @@
         }
 
         function calculateProgressPercentile($index) {
-            $d100 = $this->getNumberOfQuestions() / 100;
+            $d100 = $this->numberofquestions / 100;
             $percentile = ceil($index / $d100);
             return $percentile;
         }
