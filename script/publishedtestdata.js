@@ -146,12 +146,12 @@ function updateProgress(uId, uProg, uRes, uTime, uIndex) {
     }
     let progDiv = uId + "progress";
     let resDiv = uId + "result";
-    let timeDiv = millisecondsToTimeString(uTime) + "time";
+    let timeDiv = uId + "time";
     let prog = document.getElementById(progDiv);
     prog.innerHTML = uProg + "%";
     prog.title = "At question " + uIndex;
     document.getElementById(resDiv).innerHTML = uRes;
-    document.getElementById(timeDiv).innerHTML = uTime;
+    document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
 }
 
 function updateGroup(gScores) {
@@ -159,21 +159,21 @@ function updateGroup(gScores) {
         for (var i = 0; i < gScores.length; i++) {
             let obj = gScores[i];
             let gId = Object.keys(obj)[0];
-            let gRes = obj.gId.score;
-            let gTime = obj.gId.time;
+            let gRes = obj[gId].score;
+            let gTime = obj[gId].time;
             let resDiv = gId + "result";
             let timeDiv = gId + "time";
             document.getElementById(resDiv).innerHTML = gRes;
-            document.getElementById(timeDiv).innerHTML = gTime;
+            document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
         }
     } else {
         let gId = Object.keys(gScores)[0];
-        let gRes = gScores.gId.score;
-        let gTime = gScores.gId.time;
+        let gRes = gScores[gId].score;
+        let gTime = gScores[gId].time;
         let resDiv = gId + "result";
         let timeDiv = gId + "time";
         document.getElementById(resDiv).innerHTML = gRes;
-        document.getElementById(timeDiv).innerHTML = gTime;
+        document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
     }
 }
 
