@@ -13,7 +13,7 @@ window.onload = function () {
 window.onkeyup = function (event) {
     if (event.keyCode === 13) {
         if (viewingresult) {
-            selectMode(Modes[mode]);
+            selectMode(Modes[mode], true);
         }
         else {
             getResult();
@@ -31,7 +31,8 @@ function toFullScreen() {
         document.body.requestFullscreen();
     }
 }
-function selectMode(m) {
+function selectMode(m, init) {
+    if (init === void 0) { init = false; }
     toFullScreen();
     document.body.style.backgroundColor = "#000000";
     mode = Modes[m];
@@ -72,7 +73,8 @@ function selectMode(m) {
     holder_.appendChild(uberholder);
     document.body.appendChild(holder_);
     document.getElementById("name").addEventListener("keyup", function () { sendInput(); });
-    initiateConnection();
+    if (init)
+        initiateConnection();
 }
 function preloadImages() {
     fetch("images/groenscherm.png")
