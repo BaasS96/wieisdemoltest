@@ -2,6 +2,7 @@ var ws;
 var testStarted = false;
 var nm;
 var testStartedTime;
+var clicked = false;
 window.onload = function() {
 
 }
@@ -92,10 +93,11 @@ function loadQuestion(question, answers, lastquestion) {
     var questionQuestion = (question.index + 1) + ". &nbsp; " + question.title;
     var questionAnswers = "";
     if (lastquestion) {
-        questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest();\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
+        questionQuestion = question.title;
+        questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"endTest(this);\">&nbsp;</button><span class='input-bttn-txt'>" + answers[0] + "<span></div>";
     } else {
         for (var i = 0; i < answers.length; i++) {
-            questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ");\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
+            questionAnswers += "<div class='input-bttn-holder'><button type='submit' class='input-bttn' onclick=\"buttonClicked(" + i + ", this);\">&nbsp;</button><span class='input-bttn-txt'>" + answers[i] + "<span></div>";
         }
     }
     if (answers.length > 4) {
@@ -115,7 +117,8 @@ function loadLastQuestion(question, answers) {
     document.getElementById("QAnswers").innerHTML = questionanswer;
 }
 
-function buttonClicked(questionIndex) {
+function buttonClicked(questionIndex, bttn) {
+    bttn.disabled = true;
     document.getElementById("QUESTIONA").style.opacity = "0.0"
     document.getElementById("QUESTIONB").style.opacity = "0.0"
     setTimeout(function() {

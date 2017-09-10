@@ -22,6 +22,11 @@
                 $u->incrementQuestionCount();
                 $this->instances[$us] = $u;
                 $this->server->_send($user, $this->test->getQuestionAtIndex(0));
+                $o = [
+                    "type" => "contestantlogin",
+                    "id" => $u->id
+                ];
+                $this->sendToManagers(json_encode($o));
             }
         }
 
@@ -189,21 +194,27 @@
 
         function save() {
             $results = $this->calculateScore();
-            $lowestscore = 0;
+            $lowestscore = -1;
             $lowesttime = 0;
             $loser = NULL;
             foreach ($results as $key => $value) {
                 var_dump($value);
-                if ($lowestscore == 0) {
+                if ($lowestscore == -1) {
                     $lowestscore = $value["score"];
                     $lowesttime = $value["time"];
                     $loser = $key;
                     continue;
                 }
-                if ($value["score"] < $lowestscore && $value["time"] > $lowesttime) {
+                if ($value["score"] < $lowestscore) {
                     $lowestscore = $value["score"];
                     $lowesttime = $value["time"];
                     $loser = $key;
+                } else if ($value["score"] == $lowestscore) {
+                    if ($value["time"] > $lowesttime) {
+                        $lowestscore = $value["score"];
+                        $lowesttime = $value["time"];
+                        $loser = $key;
+                    }
                 }
             }
             $o = [

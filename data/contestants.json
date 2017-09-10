@@ -1,1 +1,11 @@
-[{"g":["Koen", "Bas", "Is", "Lelijk"]}]
+[{
+    "g": [
+        "Koen",
+        "Bas"
+    ]
+}, {
+    "b": [
+        "Tijs",
+        "Wies"
+    ]
+}]

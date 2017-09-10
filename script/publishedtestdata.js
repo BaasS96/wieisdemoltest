@@ -117,7 +117,7 @@ function newContestant(cId, cName, cPin) {
     let newContestantHolder3 = document.createElement("div");
     newContestantHolder3.className = "TD";
     newContestantHolder3.setAttribute(name = "id", value = cId + "progress");
-    newContestantHolder3.innerHTML = "0%";
+    newContestantHolder3.innerHTML = "-";
     newContestant.appendChild(newContestantHolder3);
     let newContestantHolder4 = document.createElement("div");
     newContestantHolder4.className = "TD";
@@ -155,19 +155,18 @@ function updateProgress(uId, uProg, uRes, uTime, uIndex) {
 }
 
 function updateGroup(gScores) {
-    if (gScores.constructor === Array) {
-        for (var i = 0; i < gScores.length; i++) {
-            let obj = gScores[i];
-            let gId = Object.keys(obj)[0];
-            let gRes = obj[gId].score;
-            let gTime = obj[gId].time;
+    let gIds = Object.keys(gScores);
+    if (gIds.length > 1) {
+        for (let gId of gIds) {
+            let gRes = gScores[gId].score;
+            let gTime = gScores[gId].time;
             let resDiv = gId + "result";
             let timeDiv = gId + "time";
             document.getElementById(resDiv).innerHTML = gRes;
             document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(gTime);
         }
     } else {
-        let gId = Object.keys(gScores)[0];
+        let gId = gIds[0];
         let gRes = gScores[gId].score;
         let gTime = gScores[gId].time;
         let resDiv = gId + "result";
@@ -185,6 +184,10 @@ function updateContestant(element, id, power) {
         "power": power
     };
     ws.send(JSON.stringify(o));
+}
+
+function contestantLogin(id) {
+    document.getElementById(id + "progress").innerHTML = "Logging in...";
 }
 
 function millisecondsToTimeString(duration) {
@@ -223,6 +226,8 @@ function initConnection() {
         } else if (responseData.type === "saved") {
             ws.close();
             alert("Results succesfully saved!");
+        } else if (responseData.type === "contestantlogin") {
+            contestantLogin(responseData.id);
         }
     };
     ws.onclose = function(event) {

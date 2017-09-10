@@ -123,7 +123,7 @@ function processMessageClient(msg) {
     } else if (json.type == "result") {
         var img = new Image();
         img.className = "resultimg";
-        img.src = json.result === "green" ? greenblob : redblob;
+        img.src = json.color === "green" ? greenblob : redblob;
         document.body.style.backgroundColor = "white";
         document.body.innerHTML = "";
         document.body.appendChild(img);
@@ -141,7 +141,7 @@ function processMessageServer(msg) {
     if (json.type == "result") {
         var img = new Image();
         img.className = "resultimg";
-        img.src = json.result === "green" ? greenblob : redblob;
+        img.src = json.color === "green" ? greenblob : redblob;
         document.body.style.backgroundColor = "white";
         document.body.innerHTML = "";
         document.body.appendChild(img);
