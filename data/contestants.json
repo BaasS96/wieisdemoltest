@@ -1,11 +1,35 @@
 [{
-    "g": [
-        "Koen",
-        "Bas"
-    ]
-}, {
-    "b": [
-        "Tijs",
-        "Wies"
-    ]
-}]
+        "Groep1": [
+            "Roan",
+            "Geneva",
+            "CasK",
+            "Laura",
+            "Sophie",
+            "Mika",
+            "StanBe",
+            "Wilco"
+        ]
+    },
+    {
+        "Groep2": [
+            "Duncan",
+            "Tess",
+            "ThomasB",
+            "Selina",
+            "Brechtje",
+            "Daniek",
+            "Kieran"
+        ]
+    },
+    {
+        "Groep3": [
+            "CasP",
+            "Lisa",
+            "ThomasW",
+            "Mirthe",
+            "Pippa",
+            "StanBu",
+            "Tijs"
+        ]
+    }
+]
