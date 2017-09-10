@@ -33,7 +33,7 @@ function getPublishedTest() {
         })
         .then(function(json) {
             let testName = json.name;
-            let testRevision = json.revision
+            let testRevision = json.revision;
             document.getElementById("pubtestname").innerHTML = testName + " / " + testRevision;
         })
 }

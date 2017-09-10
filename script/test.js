@@ -73,6 +73,7 @@ function startTest() {
     setTimeout(function() {
         document.getElementById("pin").value = "";
         document.getElementById("name").value = "";
+        document.getElementById("errMSSG").style.display = "none";
         logonDiv.style.display = "none";
         questionaDiv.style.display = "block";
         questionbDiv.style.display = "block";
