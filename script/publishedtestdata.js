@@ -164,7 +164,7 @@ function updateGroup(gScores) {
             let resDiv = gId + "result";
             let timeDiv = gId + "time";
             document.getElementById(resDiv).innerHTML = gRes;
-            document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
+            document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(gTime);
         }
     } else {
         let gId = Object.keys(gScores)[0];
@@ -173,7 +173,7 @@ function updateGroup(gScores) {
         let resDiv = gId + "result";
         let timeDiv = gId + "time";
         document.getElementById(resDiv).innerHTML = gRes;
-        document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(uTime);
+        document.getElementById(timeDiv).innerHTML = millisecondsToTimeString(gTime);
     }
 }
 

@@ -4,7 +4,8 @@
         public $name;
         public $group;
         public $id;
-        public $powers = [];
+        public $joker = false;
+        public $exemption = false;
         public $atquestionindex = -1;
         protected $socket;
         public $score = 0;

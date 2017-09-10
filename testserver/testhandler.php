@@ -69,21 +69,32 @@
         }
 
         function installPower($power, $user) {
+            $uid = 0;
             foreach($this->instances as $key => $value) {
                 if ($value->id == $user) {
-                    array_push($this->instances[$key]->powers, $power);
+                    $uid = $key;
+                    $this->instances[$key]->$power = true;
+                    break;
                 }
             }
             $this->calculateScore();
+            $this->statusUpdate($uid);
         }
 
         function removePower($power, $user) {
+            $uid = 0;
             foreach($this->instances as $key => $value) {
                 if ($value->id == $user) {
-                    array_splice($this->instances[$key]->powers, $power);
+                    $uid = $key;
+                    $this->instances[$key]->$power = false;
+                    if ($power == "joker") {
+                        $this->instances[$key]->score--;
+                    }
+                    break;
                 }
             }
             $this->calculateScore();
+            $this->statusUpdate($uid);
         }
 
         function calculateScore() {
@@ -98,19 +109,18 @@
                     $groupcounts[$value->group] = 0;
                 }
                 $groupcounts[$value->group]++;
-                if (empty($value->powers)) {
-                    $groups[$value->group] += $value->score;
-                } else {
-                    foreach($value->power as $power) {
-                        if ($power == "exemption") {
-                            continue 2;
-                        } else if ($power == "joker") {
-                            if ($value->score < $this->test->getNumberOfQuestions()) {
-                                $value->score++;
-                                $groups[$value->group] += $value->score;
-                            }
-                        }
+                if ($value->joker) {
+                    if ($value->score < $this->test->getNumberOfQuestions()) {
+                        $value->score++;
+                        $groups[$value->group] += $value->score;
+                    } else {
+                        $groups[$value->group] += $value->score;
                     }
+                } else {
+                    $groups[$value->group] += $value->score;
+                }
+                if ($value->exemption) {
+                    continue;
                 }
                 if (isset($value->time)) {
                     $grouptimes[$value->group] += $value->time;
