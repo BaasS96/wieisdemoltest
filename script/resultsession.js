@@ -133,6 +133,9 @@ function processMessageClient(msg) {
             selectMode(Modes[mode]);
         });
     }
+    else if (json.type == "done") {
+        selectMode(Modes[mode]);
+    }
 }
 function processMessageServer(msg) {
     if (msg === void 0) { msg = "{}"; }
@@ -172,8 +175,5 @@ function sendInput() {
         wss.send(JSON.stringify(o));
 }
 function sendDone() {
-    var p = {
-        "type": "done"
-    };
-    wss.send(JSON.stringify(p));
+    wss.send(JSON.stringify({ "type": "done" }));
 }

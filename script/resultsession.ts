@@ -173,8 +173,5 @@ function sendInput() {
 }
 
 function sendDone() {
-    let p = {
-        "type": "done"
-    };
-    wss.send(JSON.stringify(p));
+    wss.send(JSON.stringify({"type": "done"}));
 }
