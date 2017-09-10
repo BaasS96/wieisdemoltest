@@ -146,6 +146,7 @@ function processMessageServer(msg) {
         document.body.appendChild(img);
         img.addEventListener("click", function () {
             selectMode(Modes[mode]);
+            sendDone();
         });
     }
 }
@@ -169,4 +170,10 @@ function sendInput() {
     };
     if (!wss.CONNECTING)
         wss.send(JSON.stringify(o));
+}
+function sendDone() {
+    var p = {
+        "type": "done"
+    };
+    wss.send(JSON.stringify(p));
 }

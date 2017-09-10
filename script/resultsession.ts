@@ -130,6 +130,8 @@ function processMessageClient(msg : string = "{}") {
         img.addEventListener("click", () => {
             selectMode(Modes[mode]);
         });
+    } else if (json.type == "done") {
+        selectMode(Modes[mode]);
     }
 }
 
@@ -144,6 +146,7 @@ function processMessageServer(msg : string = "{}") {
         document.body.appendChild(img);
         img.addEventListener("click", () => {
             selectMode(Modes[mode]);
+            sendDone();
         });
     }
 }
@@ -167,4 +170,11 @@ function sendInput() {
     };
     if (!wss.CONNECTING)
     wss.send(JSON.stringify(o));
+}
+
+function sendDone() {
+    let p = {
+        "type": "done"
+    };
+    wss.send(JSON.stringify(p));
 }

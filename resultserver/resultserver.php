@@ -40,6 +40,8 @@
                     ];
                     $this->_send(json_encode($o));
                 }
+            } else if ($json->type == "done") {
+                $this->_send($rawjson);
             }
         } 
 
