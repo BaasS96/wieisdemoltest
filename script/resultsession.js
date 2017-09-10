@@ -3,35 +3,36 @@ var wss;
 var greenblob, redblob;
 var viewingresult = false;
 var Modes;
-(function(Modes) {
+(function (Modes) {
     Modes[Modes["CLIENT"] = 0] = "CLIENT";
     Modes[Modes["SERVER"] = 1] = "SERVER";
 })(Modes || (Modes = {}));
-window.onload = function() {
+window.onload = function () {
     preloadImages();
 };
-window.onkeyup = function(event) {
+window.onkeyup = function (event) {
     if (event.keyCode === 13) {
         if (viewingresult) {
-            selectMode(Modes[mode], true);
-        } else {
+            selectMode(Modes[mode], false);
+        }
+        else {
             getResult();
         }
     }
 };
-
 function toFullScreen() {
     if (document.body.mozRequestFullScreen) {
         document.body.mozRequestFullScreen();
-    } else if (document.body.webkitRequestFullScreen) {
+    }
+    else if (document.body.webkitRequestFullScreen) {
         document.body.webkitRequestFullscreen();
-    } else {
+    }
+    else {
         document.body.requestFullscreen();
     }
 }
-
 function selectMode(m, init) {
-    if (init === void 0) { init = false; }
+    if (init === void 0) { init = true; }
     toFullScreen();
     document.body.style.backgroundColor = "#000000";
     mode = Modes[m];
@@ -71,68 +72,68 @@ function selectMode(m, init) {
     uberholder.appendChild(holder);
     holder_.appendChild(uberholder);
     document.body.appendChild(holder_);
-    document.getElementById("name").addEventListener("keyup", function() { sendInput(); });
+    document.getElementById("name").addEventListener("keyup", function () { sendInput(); });
     if (init)
         initiateConnection();
 }
-
 function preloadImages() {
     fetch("images/groenscherm.png")
-        .then(function(res) {
-            if (res.ok) {
-                return res.blob();
-            }
-        })
-        .then(function(blob) {
-            greenblob = URL.createObjectURL(blob);
-        });
+        .then(function (res) {
+        if (res.ok) {
+            return res.blob();
+        }
+    })
+        .then(function (blob) {
+        greenblob = URL.createObjectURL(blob);
+    });
     fetch("images/roodscherm.png")
-        .then(function(res) {
-            if (res.ok) {
-                return res.blob();
-            }
-        })
-        .then(function(blob) {
-            redblob = URL.createObjectURL(blob);
-        });
+        .then(function (res) {
+        if (res.ok) {
+            return res.blob();
+        }
+    })
+        .then(function (blob) {
+        redblob = URL.createObjectURL(blob);
+    });
 }
-
 function initiateConnection() {
     var url = "ws://" + document.URL.substr(7).split('/')[0] + ":5891";
     wss = new WebSocket(url);
-    wss.onopen = function(event) {};
-    wss.onmessage = function(event) {
+    wss.onopen = function (event) {
+    };
+    wss.onmessage = function (event) {
         if (mode == Modes.CLIENT) {
             processMessageClient(event.data);
-        } else {
+        }
+        else {
             processMessageServer(event.data);
         }
     };
-    wss.onclose = function(event) {};
-    wss.onerror = function(event) {
+    wss.onclose = function (event) {
+    };
+    wss.onerror = function (event) {
         alert("Error! Details logged to console.");
         console.error(event);
     };
 }
-
 function processMessageClient(msg) {
     if (msg === void 0) { msg = "{}"; }
     var json = JSON.parse(msg);
     if (json.type === "letter") {
         document.getElementById("name").value = json.letter;
-    } else if (json.type == "result") {
+    }
+    else if (json.type == "result") {
         var img = new Image();
         img.className = "resultimg";
         img.src = json.result === "green" ? greenblob : redblob;
         document.body.style.backgroundColor = "white";
         document.body.innerHTML = "";
         document.body.appendChild(img);
-        img.addEventListener("click", function() {
+        img.addEventListener("click", function () {
             selectMode(Modes[mode]);
         });
     }
 }
-
 function processMessageServer(msg) {
     if (msg === void 0) { msg = "{}"; }
     var json = JSON.parse(msg);
@@ -143,12 +144,11 @@ function processMessageServer(msg) {
         document.body.style.backgroundColor = "white";
         document.body.innerHTML = "";
         document.body.appendChild(img);
-        img.addEventListener("click", function() {
+        img.addEventListener("click", function () {
             selectMode(Modes[mode]);
         });
     }
 }
-
 function getResult() {
     var n = document.getElementById("name").value;
     var o = {
@@ -157,7 +157,6 @@ function getResult() {
     };
     wss.send(JSON.stringify(o));
 }
-
 function sendInput() {
     if (mode == Modes.CLIENT) {
         return;

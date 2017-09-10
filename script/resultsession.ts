@@ -14,7 +14,7 @@ window.onload = () => {
 window.onkeyup = (event) => {
     if (event.keyCode === 13) {
         if (viewingresult) {
-            selectMode(Modes[mode], true);
+            selectMode(Modes[mode], false);
         } else {
             getResult();
         }
@@ -31,7 +31,7 @@ function toFullScreen() {
     }
 }
 
-function selectMode(m : string, init : boolean = false) {
+function selectMode(m : string, init : boolean = true) {
     toFullScreen();
     document.body.style.backgroundColor = "#000000";
     mode = <Modes>Modes[m];
